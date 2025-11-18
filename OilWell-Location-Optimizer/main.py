@@ -7,7 +7,8 @@ OilWell Location Optimizer — CLI
 Uso:
   python main.py --mode train --config configs/default.yaml --seed 12345
   python main.py --mode eval --config configs/default.yaml
-  python main.py --mode predict --config configs/default.yaml --region 1 --payload '{"records":[{"f0":1.0,"f1":-2.0,"f2":3.0}]}'
+  python main.py --mode predict --config configs/default.yaml --region 1 \
+      --payload '{"records":[{"f0":1.0,"f1":-2.0,"f2":3.0}]}'
 
 Modos:
   - train   Entrena un modelo por región y guarda artefactos.

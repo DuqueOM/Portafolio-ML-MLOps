@@ -39,7 +39,7 @@ def main() -> None:
         mlflow.log_params({"run_type": "demo", "note": "Chicago MLflow demo logging"})
         if metrics:
             mlflow.log_metrics(metrics)
-        for art in [Path("artifacts/metrics.json"), Path("configs/default.yaml")] :
+        for art in [Path("artifacts/metrics.json"), Path("configs/default.yaml")]:
             if art.exists():
                 mlflow.log_artifact(str(art))
         print(f"Logged Chicago run to {tracking_uri} in experiment '{experiment}'")
