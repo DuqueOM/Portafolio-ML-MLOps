@@ -357,13 +357,17 @@ class TestIntegration:
         age = np.random.normal(40, 15, n_samples)
         age = np.clip(age, 18, 92)
 
+        geography = np.random.choice(
+            ["France", "Spain", "Germany"], n_samples, p=[0.5, 0.25, 0.25]
+        )
+        is_active = np.random.choice([0, 1], n_samples, p=[0.4, 0.6])
+
         # Probabilidad de churn correlacionada con edad y otros factores
         churn_prob = (
             0.1  # Base rate
             + 0.3 * (age > 60)  # Older customers more likely to churn
-            + 0.2 * np.random.choice([0, 1], n_samples, p=[0.7, 0.3])  # Germany effect
-            + 0.15
-            * np.random.choice([0, 1], n_samples, p=[0.6, 0.4])  # Inactive effect
+            + 0.2 * (geography == "Germany")  # Germany effect
+            + 0.15 * (is_active == 0)  # Inactive effect
         )
         churn_prob = np.clip(churn_prob, 0, 1)
 
@@ -373,9 +377,7 @@ class TestIntegration:
                 "CustomerId": range(10000, 10000 + n_samples),
                 "Surname": [f"Customer_{i}" for i in range(n_samples)],
                 "CreditScore": np.random.normal(650, 100, n_samples).astype(int),
-                "Geography": np.random.choice(
-                    ["France", "Spain", "Germany"], n_samples, p=[0.5, 0.25, 0.25]
-                ),
+                "Geography": geography,
                 "Gender": np.random.choice(["Male", "Female"], n_samples),
                 "Age": age.astype(int),
                 "Tenure": np.random.randint(0, 11, n_samples),
@@ -384,7 +386,7 @@ class TestIntegration:
                     [1, 2, 3, 4], n_samples, p=[0.5, 0.3, 0.15, 0.05]
                 ),
                 "HasCrCard": np.random.choice([0, 1], n_samples, p=[0.3, 0.7]),
-                "IsActiveMember": np.random.choice([0, 1], n_samples, p=[0.4, 0.6]),
+                "IsActiveMember": is_active,
                 "EstimatedSalary": np.random.uniform(20000, 150000, n_samples),
                 "Exited": np.random.binomial(1, churn_prob, n_samples),
             }
