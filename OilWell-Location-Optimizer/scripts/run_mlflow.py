@@ -32,9 +32,13 @@ def main() -> None:
             for rid, vals in regions.items():
                 if isinstance(vals, dict):
                     if "rmse" in vals:
-                        agg_metrics[f"rmse_region_{rid}"] = float(vals["rmse"])  # type: ignore[arg-type]
+                        agg_metrics[f"rmse_region_{rid}"] = float(
+                            vals["rmse"]
+                        )  # type: ignore[arg-type]
                     if "baseline_rmse" in vals:
-                        agg_metrics[f"baseline_rmse_region_{rid}"] = float(vals["baseline_rmse"])  # type: ignore[arg-type]
+                        agg_metrics[f"baseline_rmse_region_{rid}"] = float(
+                            vals["baseline_rmse"]
+                        )  # type: ignore[arg-type]
         except Exception:
             pass
 
