@@ -1,0 +1,39 @@
+project_name: TelecomAI-Customer-Intelligence
+random_seed: 42
+
+paths:
+  data_csv: users_behavior.csv
+  artifacts_dir: artifacts
+  model_path: artifacts/model.joblib
+  preprocessor_path: artifacts/preprocessor.joblib
+  metrics_path: artifacts/metrics.json
+  confusion_matrix_path: artifacts/confusion_matrix.png
+  roc_curve_path: artifacts/roc_curve.png
+  model_export_path: models/model_v1.0.0.pkl
+
+# Datos
+features:
+  - calls
+  - minutes
+  - messages
+  - mb_used
+target: is_ultra
+
+split:
+  test_size: 0.2
+  stratify: true
+
+model:
+  name: logreg
+  params:
+    C: 1.0
+    penalty: l2
+    solver: liblinear
+    class_weight: balanced
+
+threshold: 0.5
+
+mlflow:
+  enable: true
+  experiment: TelecomAI
+  tracking_uri: file:./mlruns

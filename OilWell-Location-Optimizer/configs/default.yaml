@@ -1,0 +1,35 @@
+# OilWell Location Optimizer - default configuration
+
+project:
+  name: OilWell-Location-Optimizer
+  artifacts_dir: artifacts
+  models_dir: artifacts/models
+  metrics_path: artifacts/metrics.json
+  risk_results_path: artifacts/risk_results.json
+  predictions_dir: artifacts/predictions
+
+logging:
+  level: INFO
+
+data:
+  id_column: id
+  target_column: product
+  feature_columns: [f0, f1, f2]
+  regions:
+    "0": geo_data_0.csv
+    "1": geo_data_1.csv
+    "2": geo_data_2.csv
+
+training:
+  model_type: linear_regression
+  test_size: 0.25
+  random_state: 12345
+
+bootstrap:
+  n_bootstrap: 1000
+  n_explore: 500
+  n_select: 200
+
+financial:
+  revenue_per_unit: 4500
+  total_investment: 100000000

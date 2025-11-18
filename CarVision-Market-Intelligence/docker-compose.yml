@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=artifacts/model.joblib
+    volumes:
+      - ./:/app
+    command: uvicorn app.fastapi_app:app --host 0.0.0.0 --port 8000 --reload

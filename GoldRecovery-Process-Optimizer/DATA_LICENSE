@@ -1,0 +1,8 @@
+Data License for GoldRecovery Datasets
+
+- Dataset: gold_recovery_train.csv, gold_recovery_test.csv, gold_recovery_full.csv
+- Intended use: educativo/demostrativo y evaluación técnica del pipeline ML.
+- Redistribution: no redistribuir públicamente sin autorización del autor/origen.
+- Privacy: no contiene datos personales identificables (PII) según conocimiento.
+- Compliance: verifique normativas internas de su organización antes de usar.
+- Disclaimer: el autor no garantiza exactitud ni adecuación para producción.

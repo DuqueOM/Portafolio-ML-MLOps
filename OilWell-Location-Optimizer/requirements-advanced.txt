@@ -1,0 +1,35 @@
+# OilWell Location Optimizer - Advanced Dependencies (risk, optimization, notebooks, MLOps)
+
+# Statistical Analysis & Bootstrap
+statsmodels>=0.13.0
+arch>=5.3.0
+
+# Risk Analysis & Monte Carlo
+pymc>=5.0.0
+arviz>=0.12.0
+
+# Optimization
+cvxpy>=1.2.0
+pulp>=2.6.0
+
+# Financial Analysis
+quantlib>=1.28
+pandas-datareader>=0.10.0
+
+# Dashboard / Visualization (not used en API mínima)
+streamlit>=1.28.0
+plotly>=5.0.0
+plotly-express>=0.4.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Jupyter / Notebooks
+jupyter>=1.0.0
+ipython>=7.0.0
+
+# Parallel / Logging
+multiprocessing-logging>=0.3.0
+
+# MLOps / Monitoring (opcionales)
+mlflow>=2.9
+evidently>=0.4.8

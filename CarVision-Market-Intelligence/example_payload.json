@@ -1,0 +1,14 @@
+{
+  "model_year": 2016,
+  "model": "honda civic",
+  "condition": "good",
+  "cylinders": 4,
+  "fuel": "gas",
+  "odometer": 55000,
+  "transmission": "automatic",
+  "drive": "fwd",
+  "size": null,
+  "type": "sedan",
+  "paint_color": "white",
+  "is_4wd": 0
+}

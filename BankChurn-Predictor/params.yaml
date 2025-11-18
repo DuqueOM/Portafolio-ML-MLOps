@@ -1,0 +1,6 @@
+train:
+  seed: 42
+  test_size: 0.2
+  cv_folds: 5
+evaluate:
+  report: results/metrics

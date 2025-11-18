@@ -1,0 +1,26 @@
+stages:
+  preprocess:
+    cmd: python data/preprocess.py --input data/raw/Churn.csv --output data/processed/churn_processed.csv --config configs/config.yaml
+    deps:
+      - data/raw/Churn.csv
+      - configs/config.yaml
+      - data/preprocess.py
+    outs:
+      - data/processed/churn_processed.csv
+  train:
+    cmd: python main.py --mode train --config configs/config.yaml --seed 42 --input data/processed/churn_processed.csv
+    deps:
+      - data/processed/churn_processed.csv
+      - main.py
+    outs:
+      - models/best_model.pkl
+      - models/model_v1.0.0.pkl
+      - results/training_results.json
+  evaluate:
+    cmd: python main.py --mode evaluate --model models/best_model.pkl --config configs/config.yaml
+    deps:
+      - models/best_model.pkl
+      - data/processed/churn_processed.csv
+      - main.py
+    outs:
+      - results/metrics

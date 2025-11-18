@@ -1,0 +1,7 @@
+Data License & Provenance
+
+- Dataset: Historical Video Game Sales with Ratings (variants exist on Kaggle and open sources).
+- Columns: Name, Platform, Year_of_Release, Genre, regional sales (NA/EU/JP/Other), Critic_Score, User_Score, Rating.
+- License: The dataset is assumed to be for educational/research use. Verify the original source license before commercial use.
+- Attribution: If using Kaggle's "Video Game Sales with Ratings", see https://www.kaggle.com/datasets/rush4ratio/video-game-sales-with-ratings .
+- Note: Remove or replace this file if your copy of the dataset carries a specific license; update README accordingly.

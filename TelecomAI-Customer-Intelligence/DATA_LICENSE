@@ -1,0 +1,5 @@
+Dataset: users_behavior.csv
+
+- Source: Educational/synthetic dataset bundled with the project.
+- License: For educational and portfolio purposes. Do not use for commercial purposes unless original license is verified.
+- PII: None expected. Validate prior to production use.
