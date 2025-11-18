@@ -54,6 +54,8 @@ jobs:
           python -m pip install mypy
           if [ "${{ matrix.project }}" = "TelecomAI-Customer-Intelligence" ]; then
             mypy main.py app monitoring scripts tests
+          elif [ "${{ matrix.project }}" = "GoldRecovery-Process-Optimizer" ]; then
+            mypy main.py app monitoring scripts tests
           else
             mypy .
           fi
