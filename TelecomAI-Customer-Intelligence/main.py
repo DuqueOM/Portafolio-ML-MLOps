@@ -89,20 +89,24 @@ def train(cfg: Config) -> Dict[str, float]:
     pipeline = Pipeline(steps=[("preprocess", preprocessor), ("clf", clf)])
 
     # MLflow setup (optional)
-    use_mlflow = (
-        cfg.mlflow is not None
-        and bool(cfg.mlflow.get("enable", True))
-        and mlflow is not None
+    mlflow_cfg = cfg.mlflow
+    use_mlflow = bool(
+        mlflow_cfg is not None and mlflow is not None and mlflow_cfg.get("enable", True)
     )
     if use_mlflow:
+        # At this point mypy knows mlflow_cfg and mlflow are not None
+        assert mlflow is not None
+        assert mlflow_cfg is not None
+
         tracking_uri = (
-            cfg.mlflow.get("tracking_uri")
+            mlflow_cfg.get("tracking_uri")
             or os.getenv("MLFLOW_TRACKING_URI")
             or "file:./mlruns"
         )
         mlflow.set_tracking_uri(tracking_uri)
-        if cfg.mlflow.get("experiment"):
-            mlflow.set_experiment(cfg.mlflow["experiment"])
+        experiment_name = mlflow_cfg.get("experiment")
+        if experiment_name:
+            mlflow.set_experiment(experiment_name)
 
     if use_mlflow:
         with mlflow.start_run(run_name="train"):
