@@ -25,7 +25,7 @@ from pydantic import BaseModel, Field, validator
 
 # Agregar path del proyecto
 sys.path.append("..")
-from main import BankChurnPredictor
+from main import BankChurnPredictor  # noqa: E402
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
@@ -327,7 +327,6 @@ async def get_model_info():
 @app.get("/metrics", response_model=ModelMetrics)
 async def get_metrics():
     """Métricas del modelo y API."""
-    global request_count, total_prediction_time
 
     avg_time_ms = (
         (total_prediction_time / request_count * 1000) if request_count > 0 else 0

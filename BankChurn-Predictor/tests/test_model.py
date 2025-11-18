@@ -15,9 +15,9 @@ import pandas as pd
 import pytest
 
 sys.path.append("..")
-from main import BankChurnPredictor, ResampleClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
+from main import BankChurnPredictor, ResampleClassifier  # noqa: E402
+from sklearn.ensemble import RandomForestClassifier  # noqa: E402
+from sklearn.linear_model import LogisticRegression  # noqa: E402
 
 
 class TestResampleClassifier:
@@ -27,7 +27,6 @@ class TestResampleClassifier:
         """Setup para cada test."""
         # Crear datos sintéticos desbalanceados
         np.random.seed(42)
-        n_samples = 1000
 
         # Clase mayoritaria (80%)
         X_majority = np.random.randn(800, 5)
@@ -409,7 +408,7 @@ class TestIntegration:
         )
 
         # Entrenar
-        cv_results = predictor.train(X_train, y_train)
+        _ = predictor.train(X_train, y_train)
 
         # Evaluar
         test_results = predictor.evaluate(X_test, y_test)
