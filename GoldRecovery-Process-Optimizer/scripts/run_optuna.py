@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict
+from typing import Any, Dict
 
 import numpy as np
 import optuna
@@ -50,7 +50,7 @@ def objective(trial: optuna.Trial) -> float:
     dtrain_split = xgb.DMatrix(X.iloc[train_idx], label=y.iloc[train_idx])
     dval_split = xgb.DMatrix(X.iloc[val_idx], label=y.iloc[val_idx])
 
-    evals_result = {}
+    evals_result: Dict[str, Any] = {}
     booster = xgb.train(
         params,
         dtrain_split,

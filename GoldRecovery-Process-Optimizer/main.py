@@ -227,7 +227,7 @@ class MetallurgicalPredictor:
 
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
-        self.models = {}
+        self.models: Dict[str, Any] = {}
         self.feature_columns = None
         self.is_fitted = False
 
