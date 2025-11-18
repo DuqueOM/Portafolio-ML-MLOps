@@ -2,10 +2,8 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Optional
 
 import joblib
-import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
