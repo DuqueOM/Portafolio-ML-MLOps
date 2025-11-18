@@ -311,7 +311,10 @@ class MarketAnalyzer:
             },
             "recommendations": [
                 f"Focus on {total_opportunities} undervalued vehicles for potential ${potential_value:,.0f} profit",
-                f"Target {list(self.analysis_results['market_by_brand']['volume'].keys())[0]} brand for volume opportunities",
+                (
+                    f"Target {list(self.analysis_results['market_by_brand']['volume'].keys())[0]} brand "
+                    "for volume opportunities"
+                ),
                 "Implement dynamic pricing based on vehicle age and market conditions",
             ],
         }
