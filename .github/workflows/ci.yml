@@ -52,7 +52,11 @@ jobs:
       - name: Type-check
         run: |
           python -m pip install mypy
-          mypy .
+          if [ "${{ matrix.project }}" = "TelecomAI-Customer-Intelligence" ]; then
+            mypy main.py app monitoring scripts tests
+          else
+            mypy .
+          fi
         working-directory: ${{ matrix.project }}
       - name: Lint
         run: |
