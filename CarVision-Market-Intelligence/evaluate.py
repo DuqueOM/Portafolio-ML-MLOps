@@ -103,7 +103,7 @@ def evaluate_model(cfg: Dict) -> Dict:
             float(np.mean(deltas_arr < 0)),
         )
         bootstrap = {
-            "delta_rmse_mean": float(deltas.mean()),
+            "delta_rmse_mean": float(deltas_arr.mean()),
             "delta_rmse_ci95": [float(ci_low), float(ci_high)],
             "p_value_two_sided": float(p_value),
         }
