@@ -70,7 +70,7 @@ def bootstrap_region_profit(
     price_per_unit: float,
     total_investment: float,
     random_state: int,
-) -> Dict[str, float | list[float]]:
+) -> Dict[str, float]:
     """Bootstrap over wells: sample n_explore with replacement, select top n_select by pred,
     compute profit using ACTUAL target sums and project economics.
     """

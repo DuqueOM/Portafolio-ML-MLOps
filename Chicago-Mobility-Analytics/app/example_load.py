@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 import joblib
 import numpy as np
@@ -9,7 +10,7 @@ import numpy as np
 MODELS_DIR = Path(__file__).resolve().parents[1] / "models"
 
 
-def load_model() -> object:
+def load_model() -> Any:
     pack = MODELS_DIR / "model_v1.0.0.pkl"
     if pack.exists():
         obj = joblib.load(pack)

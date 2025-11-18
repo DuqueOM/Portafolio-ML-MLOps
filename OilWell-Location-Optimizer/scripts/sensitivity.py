@@ -61,7 +61,7 @@ def main() -> None:
     feature_cols = ["f0", "f1", "f2"]
 
     revenue_values = list(np.linspace(3000, 6000, 7))
-    investment_values = [80_000_000, 100_000_000, 120_000_000]
+    investment_values = [80_000_000.0, 100_000_000.0, 120_000_000.0]
 
     res = simulate_scenarios(df, model, feature_cols, revenue_values, investment_values)
     out = {"region": args.region, "grid": res}

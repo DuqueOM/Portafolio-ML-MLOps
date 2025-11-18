@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, List
+from typing import Any, Dict, List
 
 import pandas as pd
 import yaml
@@ -32,8 +32,8 @@ def _load_config() -> Dict:
         return yaml.safe_load(f)
 
 
-def _load_models(models_dir: Path) -> Dict[int, object]:
-    models: Dict[int, object] = {}
+def _load_models(models_dir: Path) -> Dict[int, Any]:
+    models: Dict[int, Any] = {}
     for i in [0, 1, 2]:
         path = models_dir / f"region_{i}.joblib"
         if path.exists():
