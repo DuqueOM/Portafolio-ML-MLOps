@@ -61,8 +61,8 @@ TelecomAI Customer Intelligence — Clasificador reproducible que recomienda pla
 - Fairness y atributos sensibles: el dataset no contiene variables sensibles (edad, género, región, etc.), por lo que **no se incluyen fairness tests** por segmento. En un entorno real se mitigaría añadiendo atributos sensibles anonimizados, diseñando tests de paridad (TPR/FPR) por grupo, estableciendo umbrales de aceptación y documentando resultados y decisiones en la model card antes de desplegar.
 
 ## Tests y CI (cómo correr tests).
-- Local: `make test` → ejecuta `pytest` sobre datos, modelo y API E2E (`tests/`).
-- CI: el workflow global `.github/workflows/ci.yml` instala `requirements.txt` en este proyecto y ejecuta `pytest --cov=.`, `mypy` y `flake8`.
+- Local: desde la carpeta `TelecomAI-Customer-Intelligence/`, con el entorno virtual activado y las dependencias instaladas (`pip install -r requirements.txt`), `make test` ejecuta `pytest` sobre datos, modelo y API E2E (`tests/`).
+- CI: el workflow global `.github/workflows/ci.yml` ejecuta este proyecto dentro de una matriz, añade el directorio del proyecto al `PYTHONPATH` y, desde la raíz del proyecto, lanza `pytest --cov=.`, `mypy .` y `flake8 .`.
 
 ## Monitorización y retraining (qué existe y qué no).
 - Drift: `python monitoring/check_drift.py --ref users_behavior.csv --cur users_behavior.csv --features calls minutes messages mb_used --out artifacts/drift_report.json` (opcionalmente genera HTML de Evidently si está instalado).

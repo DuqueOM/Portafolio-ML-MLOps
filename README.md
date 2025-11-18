@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-Portafolio con 7 proyectos listos para demo y reproducibilidad. Cada proyecto incluye: Makefile, API FastAPI/Streamlit (cuando aplica), export de modelo `model_v1.0.0.pkl`, notebook de demo, script de MLflow, monitoreo de drift y Dockerfile con `HEALTHCHECK`. La CI corre `pytest` por proyecto.
+Portafolio con 7 proyectos listos para demo y reproducibilidad. Cada proyecto incluye: Makefile, API FastAPI/Streamlit (cuando aplica), export de modelo `model_v1.0.0.pkl`, notebook de demo, script de MLflow, monitoreo de drift y Dockerfile con `HEALTHCHECK`. La CI, mediante el workflow global `.github/workflows/ci.yml`, corre `pytest`, `mypy` y `flake8` por proyecto.
 
 Para una vista más detallada (stack, ownership, CI y comandos), ver `docs/portfolio_landing.md`.
 
