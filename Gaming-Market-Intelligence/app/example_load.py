@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 import joblib
 import pandas as pd
@@ -9,7 +10,7 @@ import pandas as pd
 MODELS_DIR = Path(__file__).resolve().parents[1] / "artifacts" / "model"
 
 
-def load_pipeline() -> object:
+def load_pipeline() -> Any:
     pack = MODELS_DIR / "model_v1.0.0.pkl"
     if pack.exists():
         try:

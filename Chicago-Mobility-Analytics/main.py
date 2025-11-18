@@ -63,7 +63,7 @@ def train_model(cfg: Dict, seed: int) -> Dict:
     def eval_split(X_split, y_split) -> Dict[str, float]:
         preds = model.predict(X_split)
         mae = mean_absolute_error(y_split, preds)
-        rmse = mean_squared_error(y_split, preds, squared=False)
+        rmse = float(np.sqrt(mean_squared_error(y_split, preds)))
         r2 = r2_score(y_split, preds)
         return {"mae": mae, "rmse": rmse, "r2": r2}
 
@@ -113,7 +113,7 @@ def evaluate_model(cfg: Dict, seed: int) -> Dict:
     X, y = load_and_preprocess(cfg)
     preds = model.predict(X)
     mae = mean_absolute_error(y, preds)
-    rmse = mean_squared_error(y, preds, squared=False)
+    rmse = float(np.sqrt(mean_squared_error(y, preds)))
     r2 = r2_score(y, preds)
 
     metrics = {"mae": mae, "rmse": rmse, "r2": r2}
