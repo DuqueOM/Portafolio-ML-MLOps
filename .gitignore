@@ -1,0 +1,13 @@
+# Python cache
+**/__pycache__/
+*.pyc
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Artifacts de ML y modelos
+TelecomAI-Customer-Intelligence/artifacts/
+TelecomAI-Customer-Intelligence/mlruns/
+TelecomAI-Customer-Intelligence/models/*.pkl
+TelecomAI-Customer-Intelligence/models/*.joblib
