@@ -49,6 +49,12 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.model_selection import cross_val_score, train_test_split
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from common_utils.seed import set_seed
+
 # Configuración de warnings y logging
 warnings.filterwarnings("ignore", category=FutureWarning)
 logging.basicConfig(
@@ -602,7 +608,12 @@ def main():
     )
 
     parser.add_argument("--port", type=int, default=8501, help="Puerto para dashboard")
-    parser.add_argument("--seed", type=int, default=42, help="Semilla aleatoria")
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Semilla opcional (CLI > SEED env > 42)",
+    )
 
     args = parser.parse_args()
 
@@ -624,9 +635,9 @@ def main():
     if full_path_cfg:
         logger.info(f"Ruta 'full' en config: {full_path_cfg}")
 
-    # Semilla
-    seed = args.seed or cfg.get("training", {}).get("random_state", 42)
-    np.random.seed(seed)
+    # Semilla global (CLI > SEED env > 42)
+    seed = set_seed(args.seed)
+    logger.info("Using seed: %s", seed)
 
     # Crear directorios necesarios
     Path("models").mkdir(exist_ok=True)

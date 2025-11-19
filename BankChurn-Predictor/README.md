@@ -115,6 +115,16 @@ Para detalles de arquitectura, pipeline y decisiones de diseño, ver:
   - Workflow `.github/workflows/ci.yml` instala `requirements.txt` por proyecto y ejecuta `pytest --cov`, `mypy` y `flake8`.
   - Para este proyecto se ejecuta además un smoke-train: `python main.py --mode train --config configs/config.yaml --seed 42 --input data/raw/Churn.csv`.
 
+## Reproducibilidad (semillas)
+
+- Puedes fijar la aleatoriedad con el flag CLI `--seed` en `main.py`:
+  - Ejemplo: `python main.py --mode train --config configs/config.yaml --seed 123`.
+- Si no pasas `--seed`, el helper común resuelve la semilla como:
+  - `SEED` en variables de entorno (si está definida).
+  - En caso contrario, `42` por defecto.
+- En tests, `pytest` utiliza un fixture `deterministic_seed` (en `tests/conftest.py`) que fija la semilla en cada test con el siguiente orden:
+  - `TEST_SEED` > `SEED` > `42`.
+
 ## Monitorización y retraining (qué existe y qué no).
 
 - Drift:

@@ -19,6 +19,7 @@ Modos:
 import argparse
 import json
 import logging
+import sys
 from pathlib import Path
 from typing import Any, Dict
 
@@ -39,6 +40,12 @@ from evaluate import (
     split_train_val,
     train_linear_regression,
 )
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from common_utils.seed import set_seed
 
 
 def setup_logging(level: str) -> None:
@@ -226,7 +233,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--config", default="configs/default.yaml", help="Path to YAML config"
     )
-    p.add_argument("--seed", type=int, default=12345, help="Random seed")
+    p.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed (CLI > SEED env > 42)",
+    )
     p.add_argument("--region", type=int, help="Region id for predict mode")
     p.add_argument("--payload", type=str, help="Inline JSON payload for predict mode")
     p.add_argument(
@@ -241,10 +253,12 @@ def main() -> None:
     cfg = load_config(base / args.config)
     setup_logging(cfg.get("logging", {}).get("level", "INFO"))
 
+    seed_used = set_seed(args.seed)
+
     if args.mode == "train":
         cmd_train(cfg, base)
     elif args.mode == "eval":
-        cmd_eval(cfg, base, seed=args.seed)
+        cmd_eval(cfg, base, seed=seed_used)
     elif args.mode == "predict":
         if args.region is None:
             raise SystemExit("--region is required for predict mode")

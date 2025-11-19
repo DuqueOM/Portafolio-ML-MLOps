@@ -62,6 +62,12 @@ from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from common_utils.seed import set_seed
+
 # Configuración de warnings y logging
 warnings.filterwarnings("ignore", category=FutureWarning)
 logging.basicConfig(
@@ -71,17 +77,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
 # Configuración de seeds para reproducibilidad
-RANDOM_SEEDS = {"numpy": 42, "sklearn": 42, "python": 42}
-
-
-def set_seeds(seed: int = 42) -> None:
-    """Configura seeds para reproducibilidad completa."""
-    import random
-
-    np.random.seed(seed)
-    random.seed(seed)
-    logger.info(f"Seeds configuradas: {seed}")
+def set_seeds(seed: int | None = None) -> int:
+    """Configura seeds para reproducibilidad completa y devuelve la semilla usada."""
+    used = set_seed(seed)
+    logger.info(f"Seeds configuradas: {used}")
+    return used
 
 
 class ResampleClassifier:
@@ -684,7 +686,10 @@ def main():
     )
 
     parser.add_argument(
-        "--seed", type=int, default=42, help="Semilla para reproducibilidad"
+        "--seed",
+        type=int,
+        default=None,
+        help="Semilla opcional para reproducibilidad (CLI > SEED env > 42)",
     )
 
     parser.add_argument(
@@ -704,7 +709,7 @@ def main():
     args = parser.parse_args()
 
     # Configurar seeds
-    set_seeds(args.seed)
+    seed_used = set_seeds(args.seed)
 
     # Crear directorios necesarios
     Path("models").mkdir(exist_ok=True)

@@ -30,6 +30,12 @@ from sklearn.metrics import (
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from common_utils.seed import set_seed
+
 
 def setup_logging(log_dir: Path) -> None:
     log_dir.mkdir(parents=True, exist_ok=True)
@@ -282,10 +288,14 @@ def main() -> None:
     mode = args.mode
     cfg_path = args.config
 
+    # Resolver semilla global (CLI > SEED env > 42)
+    seed_used = set_seed(args.seed)
+    logging.getLogger(__name__).info("Using seed: %s", seed_used)
+
     if mode == "train":
-        cmd_train(cfg_path, seed=args.seed)
+        cmd_train(cfg_path, seed=seed_used)
     elif mode == "eval":
-        cmd_eval(cfg_path, seed=args.seed)
+        cmd_eval(cfg_path, seed=seed_used)
     elif mode == "predict":
         cmd_predict(cfg_path, args.payload)
     else:

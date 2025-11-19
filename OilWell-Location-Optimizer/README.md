@@ -81,6 +81,16 @@ OilWell Location Optimizer — Motor reproducible que recomienda la región ópt
 - Local: `pytest` en `tests/` (p.ej. `pytest -q` o `pytest --cov=. --cov-report=term-missing`).
 - CI: el workflow global `.github/workflows/ci.yml` instala `requirements.txt` para este proyecto y ejecuta `pytest --cov=.`, `mypy` y `flake8`.
 
+## Reproducibilidad (semillas)
+
+- El CLI `main.py` acepta `--seed` opcional para fijar la aleatoriedad de shuffles, splits y bootstrap de riesgo:
+  - Ejemplo: `python main.py --mode eval --config configs/default.yaml --seed 123`.
+- Si `--seed` no se especifica, la semilla efectiva se toma de:
+  - `SEED` en entorno (si existe).
+  - Si no, `42`.
+- Los tests usan un fixture `deterministic_seed` en `tests/conftest.py` que ejecuta el helper común de semillas antes de cada test con orden de prioridad:
+  - `TEST_SEED` > `SEED` > `42`.
+
 ## Monitorización y retraining (qué existe y qué no).
 - Drift: `python monitoring/check_drift.py --ref geo_data_1.csv --cur geo_data_1.csv --cols f0 f1 f2 --out-json artifacts/drift.json` (opcionalmente `--report-html artifacts/drift_report.html` si Evidently está instalado).
 - Retraining: manual vía CLI `train`; no hay scheduler ni retrain automático basado en drift (roadmap integrarlo con cron/CI/CD o eventos de monitorización).

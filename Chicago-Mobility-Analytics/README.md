@@ -76,6 +76,16 @@ Chicago Mobility Analytics — Modelo de duración de viajes que estima tiempos 
 - Local: `pytest` en `tests/` (por ejemplo `pytest -q` o `pytest --cov=. --cov-report=term-missing`).
 - CI: el workflow global `.github/workflows/ci.yml` instala `requirements.txt` para este proyecto y ejecuta `pytest --cov=.`, `mypy` y `flake8`.
 
+## Reproducibilidad (semillas)
+
+- El CLI `main.py` acepta `--seed` para controlar la aleatoriedad de splits y del `RandomForestRegressor`:
+  - Ejemplo: `python main.py --mode train --config configs/default.yaml --seed 123`.
+- Si no se pasa `--seed`, la semilla efectiva se resuelve como:
+  - Variable de entorno `SEED` (si está definida).
+  - En caso contrario, `42`.
+- Los tests utilizan un fixture `deterministic_seed` en `tests/conftest.py` que fija la semilla global antes de cada test con la misma prioridad:
+  - `TEST_SEED` > `SEED` > `42`.
+
 ## Monitorización y retraining (qué existe y qué no).
 - Drift: `python monitoring/check_drift.py --ref data/processed/trips_weather_features.csv --cur data/processed/trips_weather_features.csv`.
 - Retraining: manual vía CLI (`train`); no hay job de reentrenamiento programado (roadmap integrarlo con CI/CD o triggers por drift).

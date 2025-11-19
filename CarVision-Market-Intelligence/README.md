@@ -85,6 +85,16 @@ CarVision Market Intelligence — Modelo de pricing de vehículos usados con das
 - CI:
   - El workflow raíz `.github/workflows/ci.yml` instala `requirements.txt` para este subproyecto y ejecuta `pytest`, `mypy` y `flake8`.
 
+## Reproducibilidad (semillas)
+
+- El CLI de `main.py` acepta `--seed` opcional para fijar la aleatoriedad de splits y modelo:
+  - Ejemplo: `python main.py --mode train --config configs/config.yaml --seed 123`.
+- Si `--seed` no se pasa, la resolución de semilla es:
+  - `SEED` en entorno (si existe).
+  - Si no, se usa `42` por defecto.
+- Los tests usan un fixture global `deterministic_seed` en `tests/conftest.py` que fija la semilla en cada test según:
+  - `TEST_SEED` > `SEED` > `42`.
+
 ## Monitorización y retraining (qué existe y qué no).
 
 - Drift:

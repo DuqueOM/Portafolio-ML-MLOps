@@ -4,7 +4,17 @@
 
 Portafolio con 7 proyectos listos para demo y reproducibilidad. Cada proyecto incluye: Makefile, API FastAPI/Streamlit (cuando aplica), export de modelo `model_v1.0.0.pkl`, notebook de demo, script de MLflow, monitoreo de drift y Dockerfile con `HEALTHCHECK`. La CI, mediante el workflow global `.github/workflows/ci.yml`, corre `pytest`, `mypy` y `flake8` por proyecto.
 
-Para una vista más detallada (stack, ownership, CI y comandos), ver `docs/portfolio_landing.md`.
+### Reproducibilidad de semillas (monorepo)
+
+- Todos los proyectos comparten el helper `common_utils.set_seed` para controlar la aleatoriedad en:
+  - `random`, `numpy`, y opcionalmente PyTorch/TensorFlow si están instalados.
+- Patrones comunes:
+  - Los CLIs aceptan un flag opcional `--seed` que tiene prioridad máxima.
+  - Si `--seed` no se pasa, se usa la variable de entorno `SEED` si está definida.
+  - En ausencia de ambas, la semilla por defecto es `42`.
+- Tests:
+  - Cada subproyecto define un fixture `deterministic_seed` en `tests/conftest.py` que fija la semilla antes de cada test siguiendo el orden `TEST_SEED` > `SEED` > `42`.
+  - En CI puedes fijar `SEED` o `TEST_SEED` en el bloque `env:` del workflow para ejecuciones completamente deterministas.
 
 ## Proyectos
 

@@ -21,6 +21,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in os.sys.path:
+    os.sys.path.insert(0, str(BASE_DIR))
+
+from common_utils.seed import set_seed
+
 # Optional MLflow integration
 try:
     import mlflow
@@ -246,12 +252,23 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", type=str, default="configs/config.yaml")
     parser.add_argument("--input_csv", type=str, default=None)
     parser.add_argument("--output_path", type=str, default=None)
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Optional seed for reproducibility (CLI > SEED env > 42)",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     cfg = load_config(args.config)
+
+    # Resolver semilla global (CLI > SEED env > 42)
+    seed_used = set_seed(args.seed)
+    logger.info("Using seed: %s", seed_used)
+    cfg.random_seed = int(seed_used)
 
     if args.mode == "train":
         train(cfg)

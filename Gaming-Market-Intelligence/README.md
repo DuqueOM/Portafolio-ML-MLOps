@@ -80,6 +80,16 @@ Gaming Market Intelligence — Clasificador que estima probabilidad de éxito co
 - Local: `pytest` en `tests/` (por ejemplo `pytest -q` o `pytest --cov=. --cov-report=term-missing`).
 - CI: el workflow global `.github/workflows/ci.yml` instala `requirements.txt` para este proyecto y ejecuta `pytest --cov=.`, `mypy` y `flake8`.
 
+## Reproducibilidad (semillas)
+
+- El CLI `main.py` acepta `--seed` opcional para fijar la semilla de splits y del modelo:
+  - Ejemplo: `python main.py --mode train --config configs/config.yaml --seed 123`.
+- Si `--seed` no se proporciona, la semilla se toma de:
+  - `SEED` en entorno (si existe).
+  - En su defecto, `42`.
+- Los tests usan un fixture `deterministic_seed` en `tests/conftest.py` que ejecuta `set_seed` antes de cada test, resolviendo la semilla como:
+  - `TEST_SEED` > `SEED` > `42`.
+
 ## Monitorización y retraining (qué existe y qué no).
 - Drift: `python monitoring/check_drift.py --ref games.csv --cur games.csv --cols critic_score user_score year_of_release`.
 - Retraining: manual con `--mode train`; no hay automatización aún (roadmap integrarlo con CI/CD y monitorización de drift).

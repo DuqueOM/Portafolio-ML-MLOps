@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import sys
 from pathlib import Path
 from typing import Dict
 
@@ -24,6 +25,12 @@ from data.preprocess import load_and_preprocess
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from common_utils.seed import set_seed
 
 
 def load_config(path: Path) -> Dict:
@@ -158,7 +165,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Chicago Mobility ML pipeline")
     parser.add_argument("--mode", choices=["train", "eval", "predict"], required=True)
     parser.add_argument("--config", type=str, default="configs/default.yaml")
-    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Semilla opcional (CLI > SEED env > 42)",
+    )
     parser.add_argument("--start_ts", type=str, help="Timestamp para predicción")
     parser.add_argument(
         "--weather_conditions",
@@ -176,12 +188,14 @@ def cli_main() -> None:
     cfg = load_config(Path(args.config))
     setup_logging(cfg.get("logging", {}).get("level", "INFO"))
 
+    seed_used = set_seed(args.seed)
+
     try:
         if args.mode == "train":
-            metrics = train_model(cfg, args.seed)
+            metrics = train_model(cfg, seed_used)
             print(json.dumps(metrics, indent=2))
         elif args.mode == "eval":
-            metrics = evaluate_model(cfg, args.seed)
+            metrics = evaluate_model(cfg, seed_used)
             print(json.dumps(metrics, indent=2))
         elif args.mode == "predict":
             if not args.start_ts or not args.weather_conditions:

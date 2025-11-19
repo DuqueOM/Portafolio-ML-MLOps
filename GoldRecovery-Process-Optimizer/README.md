@@ -70,6 +70,16 @@ GoldRecovery Process Optimizer — Ensemble de modelos que predice y optimiza la
 - Local: `pytest` en `tests/` (por ejemplo `pytest -q` o `pytest --cov=. --cov-report=term-missing`).
 - CI: el workflow global `.github/workflows/ci.yml` instala `requirements.txt` para este proyecto y ejecuta `pytest --cov=.`, `mypy` y `flake8`.
 
+## Reproducibilidad (semillas)
+
+- El CLI `main.py` acepta `--seed` opcional para controlar la aleatoriedad de splits y del ensemble:
+  - Ejemplo: `python main.py --mode train --config configs/config.yaml --seed 123`.
+- Si omites `--seed`, la semilla global se resuelve así:
+  - Variable de entorno `SEED` si está definida.
+  - Si no, se usa `42` como valor por defecto.
+- Los tests tienen un fixture `deterministic_seed` en `tests/conftest.py` que fija la semilla antes de cada test siguiendo la prioridad:
+  - `TEST_SEED` > `SEED` > `42`.
+
 ## Monitorización y retraining (qué existe y qué no).
 - Drift:
   - `make check-drift` → usa `monitoring/check_drift.py` para comparar distribuciones entre un CSV de referencia y uno actual usando KS/PSI.

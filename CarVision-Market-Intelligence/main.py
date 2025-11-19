@@ -43,6 +43,12 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.pipeline import Pipeline
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+from common_utils.seed import set_seed
+
 # Configuración de warnings y logging
 warnings.filterwarnings("ignore", category=FutureWarning)
 logging.basicConfig(
@@ -767,6 +773,10 @@ def main():
 
     args = parser.parse_args()
 
+    # Resolver semilla global (CLI > SEED env > 42)
+    seed_used = set_seed(args.seed)
+    logger.info("Using seed: %s", seed_used)
+
     # Crear directorios necesarios
     Path("reports").mkdir(exist_ok=True)
     Path("results").mkdir(exist_ok=True)
@@ -874,8 +884,7 @@ def main():
         elif args.mode == "train":
             logger.info("=== MODO TRAIN ===")
             cfg = load_config(args.config)
-            if args.seed is not None:
-                cfg["seed"] = int(args.seed)
+            cfg["seed"] = int(seed_used)
             result = train_model(cfg)
             logger.info(f"Modelo guardado en: {result['model_path']}")
             print(json.dumps(result["val_metrics"], indent=2))
@@ -883,8 +892,7 @@ def main():
         elif args.mode == "eval":
             logger.info("=== MODO EVAL ===")
             cfg = load_config(args.config)
-            if args.seed is not None:
-                cfg["seed"] = int(args.seed)
+            cfg["seed"] = int(seed_used)
             results = eval_model(cfg)
             print(json.dumps(results, indent=2))
 
@@ -893,8 +901,7 @@ def main():
             if not args.input_json or not Path(args.input_json).exists():
                 raise FileNotFoundError("Debe especificar --input_json con ruta válida")
             cfg = load_config(args.config)
-            if args.seed is not None:
-                cfg["seed"] = int(args.seed)
+            cfg["seed"] = int(seed_used)
             paths = cfg["paths"]
             model = joblib.load(paths["model_path"])
             # load feature columns
