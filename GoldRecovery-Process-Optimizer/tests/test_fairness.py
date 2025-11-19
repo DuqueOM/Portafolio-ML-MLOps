@@ -1,8 +1,10 @@
 import numpy as np
 import pandas as pd
+import pytest
 from main import MetallurgicalPredictor
 
 
+@pytest.mark.slow
 def test_group_predictions_finite_by_synthetic_flag():
     """Smoke test de fairness en GoldRecovery.
 

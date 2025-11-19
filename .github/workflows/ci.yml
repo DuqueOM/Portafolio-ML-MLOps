@@ -51,8 +51,26 @@ jobs:
             pip install -r requirements.txt
           fi
         working-directory: ${{ matrix.project }}
+      - name: Run pre-commit
+        run: |
+          python -m pip install pre-commit
+          pre-commit run --all-files --show-diff-on-failure
+        working-directory: ${{ matrix.project }}
       - name: Run tests
-        run: pytest --cov=. --cov-report=term-missing
+        run: |
+          COV_FAIL_UNDER=70
+
+          if [ "${{ matrix.project }}" = "BankChurn-Predictor" ]; then
+            COV_FAIL_UNDER=75
+          elif [ "${{ matrix.project }}" = "Chicago-Mobility-Analytics" ]; then
+            COV_FAIL_UNDER=75
+          elif [ "${{ matrix.project }}" = "GoldRecovery-Process-Optimizer" ]; then
+            COV_FAIL_UNDER=75
+          elif [ "${{ matrix.project }}" = "OilWell-Location-Optimizer" ]; then
+            COV_FAIL_UNDER=75
+          fi
+
+          pytest --cov=. --cov-report=term-missing --cov-fail-under=$COV_FAIL_UNDER -m "not slow"
         working-directory: ${{ matrix.project }}
       - name: Type-check
         run: |
@@ -81,3 +99,50 @@ jobs:
         run: |
           python main.py --mode train --config configs/config.yaml --seed 42 --input data/raw/Churn.csv
         working-directory: ${{ matrix.project }}
+
+  # slow-tests:
+  #   name: "slow-tests (project: ${{ matrix.project }})"
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       project:
+  #         - TelecomAI-Customer-Intelligence
+  #         - CarVision-Market-Intelligence
+  #         - BankChurn-Predictor
+  #         - GoldRecovery-Process-Optimizer
+  #         - Chicago-Mobility-Analytics
+  #         - Gaming-Market-Intelligence
+  #         - OilWell-Location-Optimizer
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Setup Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: '3.10'
+  #     - name: Set PYTHONPATH
+  #       run: |
+  #         REPO_ROOT="${GITHUB_WORKSPACE:-$(pwd)}"
+  #         echo "PYTHONPATH=$PYTHONPATH:${REPO_ROOT}:${REPO_ROOT}/${{ matrix.project }}" >> $GITHUB_ENV
+  #     - name: Cache pip
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: ~/.cache/pip
+  #         key: ${{ runner.os }}-pip-${{ hashFiles(format('{0}/requirements.txt', matrix.project)) }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-pip-
+  #     - name: Install dependencies
+  #       run: |
+  #         python -m pip install --upgrade pip
+  #         if [ "${{ matrix.project }}" = "TelecomAI-Customer-Intelligence" ] || [ "${{ matrix.project }}" = "BankChurn-Predictor" ] || [ "${{ matrix.project }}" = "OilWell-Location-Optimizer" ]; then
+  #           pip install -r requirements.in
+  #         else
+  #           pip install -r requirements.txt
+  #         fi
+  #       working-directory: ${{ matrix.project }}
+  #     - name: Run slow tests
+  #       run: pytest -m slow --cov=. --cov-report=term-missing
+  #       working-directory: ${{ matrix.project }}

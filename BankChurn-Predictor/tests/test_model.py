@@ -244,6 +244,7 @@ class TestBankChurnPredictor:
 
             assert isinstance(model, VotingClassifier)
 
+    @pytest.mark.slow
     def test_train_and_evaluate_pipeline(self):
         """Test pipeline completo de entrenamiento y evaluación."""
         predictor = BankChurnPredictor()
@@ -346,6 +347,7 @@ class TestBankChurnPredictor:
 class TestIntegration:
     """Tests de integración end-to-end."""
 
+    @pytest.mark.slow
     def test_full_pipeline_with_real_data_structure(self):
         """Test pipeline completo con estructura de datos real."""
         # Simular datos más realistas

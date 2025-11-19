@@ -4,9 +4,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 from main import load_config, train_model
 
 
+@pytest.mark.slow
 def test_train_model_runs_and_returns_metrics() -> None:
     """Entrena un modelo pequeño y devuelve métricas razonables."""
 

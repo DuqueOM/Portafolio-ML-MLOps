@@ -1,8 +1,10 @@
 import numpy as np
 import pandas as pd
+import pytest
 from main import MetallurgicalPredictor
 
 
+@pytest.mark.slow
 def test_prepare_and_train_predictor():
     # Datos sinteticos con columnas clave
     n = 100

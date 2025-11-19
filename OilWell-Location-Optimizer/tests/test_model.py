@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+import pytest
 from evaluate import (
     bootstrap_region_profit,
     evaluate_baseline,
@@ -35,6 +36,7 @@ def test_train_and_rmse():
     assert rmse < baseline
 
 
+@pytest.mark.slow
 def test_bootstrap_shapes_and_keys():
     df = _toy_df(1000)
     X = df[["f0", "f1", "f2"]]

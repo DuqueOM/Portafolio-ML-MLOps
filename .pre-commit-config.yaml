@@ -1,0 +1,77 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3.10
+        args: ["--line-length=120"]
+        exclude: >
+          (?x)(
+            ^\.venv/|
+            ^\.tox/|
+            ^.*\/data\/|
+            ^.*\/artifacts\/|
+            ^.*\/mlruns\/|
+            ^.*\/__pycache__\/|
+            ^.*\.ipynb$
+          )
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: isort (python)
+        args: ["--profile=black", "--line-length=120"]
+        exclude: >
+          (?x)(
+            ^\.venv/|
+            ^\.tox/|
+            ^.*\/data\/|
+            ^.*\/artifacts\/|
+            ^.*\/mlruns\/|
+            ^.*\/__pycache__\/|
+            ^.*\.ipynb$
+          )
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        args: ["--max-line-length=120"]
+        exclude: >
+          (?x)(
+            ^\.venv/|
+            ^\.tox/|
+            ^.*\/data\/|
+            ^.*\/artifacts\/|
+            ^.*\/mlruns\/|
+            ^.*\/__pycache__\/|
+            ^.*\.ipynb$
+          )
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0
+    hooks:
+      - id: mypy
+        args:
+          - "--python-version=3.10"
+          - "--ignore-missing-imports"
+        files: >
+          ^(BankChurn-Predictor|
+            CarVision-Market-Intelligence|
+            Chicago-Mobility-Analytics|
+            Gaming-Market-Intelligence|
+            GoldRecovery-Process-Optimizer|
+            OilWell-Location-Optimizer|
+            TelecomAI-Customer-Intelligence)/
+            (main\.py|app/.*|monitoring/.*|scripts/.*|tests/.*)$
+        exclude: >
+          (?x)(
+            ^\.venv/|
+            ^\.tox/|
+            ^.*\/data\/|
+            ^.*\/artifacts\/|
+            ^.*\/mlruns\/|
+            ^.*\/__pycache__\/|
+            ^.*\.ipynb$
+          )

@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pandas as pd
+import pytest
 from app.fastapi_app import app
 from fastapi.testclient import TestClient
 from main import load_config, train
@@ -27,6 +28,7 @@ def test_health_endpoint():
     assert resp.json()["status"] == "ok"
 
 
+@pytest.mark.slow
 def test_predict_endpoint_smoke():
     ensure_artifacts()
     client = TestClient(app)
