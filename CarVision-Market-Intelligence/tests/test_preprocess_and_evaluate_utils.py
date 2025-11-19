@@ -8,6 +8,7 @@ import pytest
 import yaml
 from data.preprocess import build_preprocessor, clean_data, infer_feature_types, load_data, split_data
 from evaluate import evaluate_model, rmse
+from main import train_model
 
 
 def test_load_data_reads_csv(tmp_path: Path) -> None:
@@ -109,6 +110,7 @@ def test_evaluate_model_creates_artifacts(tmp_path: Path) -> None:
         "baseline_metrics_path": str(artifacts_dir / "baseline.json"),
     }
 
+    train_model(cfg)
     results = evaluate_model(cfg)
     assert "model" in results
     assert Path(cfg["paths"]["metrics_path"]).exists()
