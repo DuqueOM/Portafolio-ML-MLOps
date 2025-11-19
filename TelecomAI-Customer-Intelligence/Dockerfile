@@ -6,6 +6,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
+# Create non-root user for security
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
 # System deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential curl \
@@ -17,6 +20,11 @@ RUN pip install --no-cache-dir -r requirements.txt && pip cache purge
 
 # Copy code
 COPY . .
+
+# Ensure app directory is owned by non-root user
+RUN chown -R appuser:appuser /app
+
+USER appuser
 
 EXPOSE 8000
 

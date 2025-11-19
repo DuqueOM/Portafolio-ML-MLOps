@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telecomai
+  labels:
+    app: telecomai
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: telecomai
+  template:
+    metadata:
+      labels:
+        app: telecomai
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: telecomai
+          image: ghcr.io/OWNER/telecomai:telecomai-v0.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MODEL_PATH
+              value: "artifacts/model.joblib"
+            - name: PREPROCESSOR_PATH
+              value: "artifacts/preprocessor.joblib"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
