@@ -62,11 +62,13 @@ from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-BASE_DIR = Path(__file__).resolve().parents[1]
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
-
-from common_utils.seed import set_seed
+try:
+    from common_utils.seed import set_seed
+except ModuleNotFoundError:  # pragma: no cover
+    BASE_DIR = Path(__file__).resolve().parents[1]
+    if str(BASE_DIR) not in sys.path:
+        sys.path.insert(0, str(BASE_DIR))
+    from common_utils.seed import set_seed
 
 # Configuración de warnings y logging
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -710,6 +712,7 @@ def main():
 
     # Configurar seeds
     seed_used = set_seeds(args.seed)
+    logger.info("Seed utilizada en CLI: %s", seed_used)
 
     # Crear directorios necesarios
     Path("models").mkdir(exist_ok=True)
