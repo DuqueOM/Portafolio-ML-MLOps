@@ -41,8 +41,10 @@ class DummyPredictor:
         )
 
     def preprocess_data(self, df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
-        X = pd.DataFrame({"feature": [0.1, 0.9, 0.2, 0.8]})
-        y = pd.Series([0, 1, 0, 1])
+        n_rows = len(df)
+        X = pd.DataFrame({"feature": np.linspace(0.1, 0.9, n_rows)})
+        # Generar una serie binaria simple del mismo tamaño que X
+        y = pd.Series([0, 1] * (n_rows // 2) + [0] * (n_rows % 2))
         return X, y
 
     def train(self, X: pd.DataFrame, y: pd.Series) -> dict[str, float]:
