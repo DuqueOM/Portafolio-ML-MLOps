@@ -125,7 +125,7 @@ def evaluate_command(args: argparse.Namespace) -> int:
         X = data.drop(columns=[config.data.target_column])
 
         # Evaluate
-        metrics = evaluator.evaluate(X, y, output_path=args.output)
+        evaluator.evaluate(X, y, output_path=args.output)
 
         # Fairness metrics if requested
         if args.fairness_features:
