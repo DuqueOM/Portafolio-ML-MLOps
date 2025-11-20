@@ -28,10 +28,10 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Instalar dependencias Python
-# Desactivar verificación de hashes para evitar error con dependencias transitivas
-ENV PIP_NO_REQUIRE_HASHES=1
+# Remover hashes de requirements.txt para evitar conflictos con dependencias transitivas
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    grep -v '^\s*--hash' requirements.txt | grep -v '^\s*#' | grep -v '^\s*$' > requirements_no_hash.txt && \
+    pip install --no-cache-dir -r requirements_no_hash.txt
 
 # Copiar código fuente
 COPY . .
