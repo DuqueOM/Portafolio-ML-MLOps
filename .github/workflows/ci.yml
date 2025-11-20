@@ -126,6 +126,10 @@ jobs:
           - BankChurn-Predictor
           - TelecomAI-Customer-Intelligence
           - CarVision-Market-Intelligence
+          - Chicago-Mobility-Analytics
+          - GoldRecovery-Process-Optimizer
+          - Gaming-Market-Intelligence
+          - OilWell-Location-Optimizer
     steps:
       - uses: actions/checkout@v4
       - name: Set up Docker Buildx

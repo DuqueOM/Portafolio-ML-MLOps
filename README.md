@@ -367,6 +367,10 @@ Portafolio-ML-MLOps/
 - ✅ **Arquitectura modular** implementada en proyecto Tier-1
 - ✅ **85% test coverage** en proyecto principal
 - ✅ **CI/CD robusto** con 4 jobs paralelos
+- ✅ **100% containerizados**: Docker en 7/7 proyectos
+- ✅ **Kubernetes production-ready**: Manifests completos (HPA, Ingress, Storage)
+- ✅ **Infrastructure as Code**: Terraform para AWS + GCP
+- ✅ **Monitoring stack**: Prometheus + Grafana con alerting
 - ✅ **100% type hints** y code quality tools
 - ✅ **Security first**: 0 vulnerabilidades detectadas
 
@@ -436,7 +440,7 @@ Los datasets utilizados son educativos/simulados. Ver `DATA_LICENSE` en cada pro
 
 ---
 
-## 👤 Autor
+## 👤 Autor.
 
 **Duque Ortega Mutis (DuqueOM)**
 

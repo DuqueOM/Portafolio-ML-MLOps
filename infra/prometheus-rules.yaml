@@ -1,0 +1,163 @@
+groups:
+- name: ml_services_alerts
+  interval: 30s
+  rules:
+  # High error rate
+  - alert: HighErrorRate
+    expr: |
+      (
+        sum(rate(http_requests_total{status=~"5.."}[5m])) by (service)
+        /
+        sum(rate(http_requests_total[5m])) by (service)
+      ) > 0.05
+    for: 5m
+    labels:
+      severity: warning
+      team: ml-ops
+    annotations:
+      summary: "High error rate on {{ $labels.service }}"
+      description: "Service {{ $labels.service }} has error rate of {{ $value | humanizePercentage }} (threshold: 5%)"
+
+  # High latency
+  - alert: HighLatency
+    expr: |
+      histogram_quantile(0.95, 
+        sum(rate(http_request_duration_seconds_bucket[5m])) by (le, service)
+      ) > 2
+    for: 5m
+    labels:
+      severity: warning
+      team: ml-ops
+    annotations:
+      summary: "High latency on {{ $labels.service }}"
+      description: "95th percentile latency is {{ $value }}s on {{ $labels.service }}"
+
+  # Service down
+  - alert: ServiceDown
+    expr: up{job=~".*-intelligence|.*-predictor"} == 0
+    for: 2m
+    labels:
+      severity: critical
+      team: ml-ops
+    annotations:
+      summary: "Service {{ $labels.job }} is down"
+      description: "Service {{ $labels.job }} has been down for more than 2 minutes"
+
+  # High memory usage
+  - alert: HighMemoryUsage
+    expr: |
+      (
+        container_memory_usage_bytes{namespace="ml-portfolio"}
+        / 
+        container_spec_memory_limit_bytes{namespace="ml-portfolio"}
+      ) > 0.9
+    for: 5m
+    labels:
+      severity: warning
+      team: ml-ops
+    annotations:
+      summary: "High memory usage on {{ $labels.pod }}"
+      description: "Pod {{ $labels.pod }} is using {{ $value | humanizePercentage }} of memory limit"
+
+  # High CPU usage
+  - alert: HighCPUUsage
+    expr: |
+      (
+        rate(container_cpu_usage_seconds_total{namespace="ml-portfolio"}[5m])
+        /
+        container_spec_cpu_quota{namespace="ml-portfolio"}
+      ) > 0.9
+    for: 10m
+    labels:
+      severity: warning
+      team: ml-ops
+    annotations:
+      summary: "High CPU usage on {{ $labels.pod }}"
+      description: "Pod {{ $labels.pod }} is using {{ $value | humanizePercentage }} of CPU quota"
+
+- name: ml_model_alerts
+  interval: 1m
+  rules:
+  # Model prediction drift
+  - alert: ModelDrift
+    expr: model_drift_score > 0.1
+    for: 15m
+    labels:
+      severity: warning
+      team: ml-ops
+    annotations:
+      summary: "Model drift detected on {{ $labels.model }}"
+      description: "Drift score is {{ $value }} for model {{ $labels.model }}"
+
+  # Low prediction confidence
+  - alert: LowPredictionConfidence
+    expr: |
+      (
+        sum(model_predictions_total{confidence="low"}) by (model)
+        /
+        sum(model_predictions_total) by (model)
+      ) > 0.3
+    for: 10m
+    labels:
+      severity: warning
+      team: ml-ops
+    annotations:
+      summary: "High rate of low confidence predictions"
+      description: "{{ $value | humanizePercentage }} of predictions have low confidence on {{ $labels.model }}"
+
+  # Prediction rate drop
+  - alert: PredictionRateDrop
+    expr: |
+      (
+        rate(model_predictions_total[5m])
+        /
+        rate(model_predictions_total[5m] offset 1h)
+      ) < 0.5
+    for: 10m
+    labels:
+      severity: warning
+      team: ml-ops
+    annotations:
+      summary: "Prediction rate dropped significantly"
+      description: "Prediction rate is {{ $value | humanizePercentage }} of normal for {{ $labels.model }}"
+
+- name: infrastructure_alerts
+  interval: 30s
+  rules:
+  # Kubernetes node not ready
+  - alert: KubernetesNodeNotReady
+    expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+    for: 5m
+    labels:
+      severity: critical
+      team: platform
+    annotations:
+      summary: "Kubernetes node not ready"
+      description: "Node {{ $labels.node }} has been not ready for more than 5 minutes"
+
+  # Pod restart frequency
+  - alert: PodRestartingFrequently
+    expr: rate(kube_pod_container_status_restarts_total{namespace="ml-portfolio"}[15m]) > 0
+    for: 15m
+    labels:
+      severity: warning
+      team: ml-ops
+    annotations:
+      summary: "Pod is restarting frequently"
+      description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is restarting frequently"
+
+  # Persistent volume usage
+  - alert: PersistentVolumeUsageHigh
+    expr: |
+      (
+        kubelet_volume_stats_used_bytes{namespace="ml-portfolio"}
+        /
+        kubelet_volume_stats_capacity_bytes{namespace="ml-portfolio"}
+      ) > 0.85
+    for: 5m
+    labels:
+      severity: warning
+      team: platform
+    annotations:
+      summary: "Persistent volume usage is high"
+      description: "Volume {{ $labels.persistentvolumeclaim }} is {{ $value | humanizePercentage }} full"

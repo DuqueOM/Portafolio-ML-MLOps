@@ -1,0 +1,78 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ml-portfolio-ingress
+  namespace: ml-portfolio
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/limit-rps: "10"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+spec:
+  tls:
+  - hosts:
+    - ml.duqueom.com
+    - bankchurn.ml.duqueom.com
+    - telecom.ml.duqueom.com
+    - carvision.ml.duqueom.com
+    secretName: ml-portfolio-tls
+  rules:
+  - host: bankchurn.ml.duqueom.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bankchurn-service
+            port:
+              number: 80
+  - host: telecom.ml.duqueom.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: telecom-service
+            port:
+              number: 80
+  - host: carvision.ml.duqueom.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: carvision-service
+            port:
+              number: 80
+  - host: ml.duqueom.com
+    http:
+      paths:
+      - path: /bankchurn
+        pathType: Prefix
+        backend:
+          service:
+            name: bankchurn-service
+            port:
+              number: 80
+      - path: /telecom
+        pathType: Prefix
+        backend:
+          service:
+            name: telecom-service
+            port:
+              number: 80
+      - path: /carvision
+        pathType: Prefix
+        backend:
+          service:
+            name: carvision-service
+            port:
+              number: 80

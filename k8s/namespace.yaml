@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ml-portfolio
+  labels:
+    name: ml-portfolio
+    env: production
+    owner: duqueom
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: ml-portfolio-quota
+  namespace: ml-portfolio
+spec:
+  hard:
+    requests.cpu: "10"
+    requests.memory: 20Gi
+    limits.cpu: "20"
+    limits.memory: 40Gi
+    persistentvolumeclaims: "10"
+    services.loadbalancers: "3"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ml-portfolio-limits
+  namespace: ml-portfolio
+spec:
+  limits:
+  - max:
+      cpu: "2"
+      memory: 2Gi
+    min:
+      cpu: "100m"
+      memory: 128Mi
+    default:
+      cpu: "500m"
+      memory: 512Mi
+    defaultRequest:
+      cpu: "200m"
+      memory: 256Mi
+    type: Container
