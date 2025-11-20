@@ -49,7 +49,7 @@ class ModelEvaluator:
     def __init__(self, model: Any, preprocessor: Any) -> None:
         self.model = model
         self.preprocessor = preprocessor
-        self.metrics_ = {}
+        self.metrics_: dict[str, float] = {}
 
     @classmethod
     def from_files(cls, model_path: str | Path, preprocessor_path: str | Path) -> ModelEvaluator:

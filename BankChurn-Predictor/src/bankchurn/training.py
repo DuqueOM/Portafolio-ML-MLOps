@@ -55,10 +55,10 @@ class ChurnTrainer:
     def __init__(self, config: BankChurnConfig, random_state: int | None = None) -> None:
         self.config = config
         self.random_state = random_state or config.model.random_state
-        self.model_ = None
-        self.preprocessor_ = None
-        self.train_score_ = None
-        self.test_score_ = None
+        self.model_: Pipeline | None = None
+        self.preprocessor_: ColumnTransformer | None = None
+        self.train_score_: float | None = None
+        self.test_score_: float | None = None
 
     def load_data(self, input_path: str | Path) -> pd.DataFrame:
         """Load and validate input data.
@@ -230,6 +230,7 @@ class ChurnTrainer:
         self.preprocessor_ = self.build_preprocessor(X)
 
         # Transform features
+        assert self.preprocessor_ is not None
         X_transformed = self.preprocessor_.fit_transform(X)
 
         # Split data
@@ -269,6 +270,7 @@ class ChurnTrainer:
             logger.info(f"CV Mean F1: {np.mean(cv_scores):.4f} (+/- {np.std(cv_scores):.4f})")
 
         # Final training on full train set
+        assert self.model_ is not None
         self.model_.fit(X_train, y_train)
 
         # Evaluate
@@ -280,6 +282,7 @@ class ChurnTrainer:
 
         # AUC if probability available
         try:
+            assert self.model_ is not None
             y_test_proba = self.model_.predict_proba(X_test)[:, 1]
             test_auc = roc_auc_score(y_test, y_test_proba)
         except Exception:
