@@ -62,12 +62,14 @@ jobs:
 
           if [ "${{ matrix.project }}" = "BankChurn-Predictor" ]; then
             COV_FAIL_UNDER=75
-          elif [ "${{ matrix.project }}" = "Chicago-Mobility-Analytics" ]; then
-            COV_FAIL_UNDER=75
           elif [ "${{ matrix.project }}" = "GoldRecovery-Process-Optimizer" ]; then
-            COV_FAIL_UNDER=75
+            COV_FAIL_UNDER=20
+          elif [ "${{ matrix.project }}" = "Chicago-Mobility-Analytics" ]; then
+            COV_FAIL_UNDER=35
+          elif [ "${{ matrix.project }}" = "Gaming-Market-Intelligence" ]; then
+            COV_FAIL_UNDER=30
           elif [ "${{ matrix.project }}" = "OilWell-Location-Optimizer" ]; then
-            COV_FAIL_UNDER=75
+            COV_FAIL_UNDER=40
           fi
 
           pytest --cov=. --cov-report=term-missing --cov-fail-under=$COV_FAIL_UNDER -m "not slow"

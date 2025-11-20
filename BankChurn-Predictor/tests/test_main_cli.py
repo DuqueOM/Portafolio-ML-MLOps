@@ -60,7 +60,7 @@ class DummyPredictor:
     def save_model(self, model_path: str, preprocessor_path: str) -> None:
         Path(model_path).write_text("model")
         Path(preprocessor_path).write_text("preprocessor")
-        metadata = Path(model_path).with_suffix("_metadata.json")
+        metadata = Path(model_path).with_name(Path(model_path).stem + "_metadata.json")
         metadata.write_text("{}")
 
     def load_model(self, model_path: str, preprocessor_path: str) -> None:

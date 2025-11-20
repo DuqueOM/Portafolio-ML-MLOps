@@ -37,6 +37,7 @@ Fecha: 2024-11-16
 """
 
 import argparse
+import json
 import logging
 import sys
 import time
@@ -743,8 +744,6 @@ def main():
                 "cv_results": cv_results,
                 "test_results": {k: v for k, v in test_results.items() if k not in ["predictions", "probabilities"]},
             }
-
-            import json
 
             with open("results/training_results.json", "w") as f:
                 json.dump(results, f, indent=2, default=str)
