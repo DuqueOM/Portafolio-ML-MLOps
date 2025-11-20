@@ -380,7 +380,7 @@ Actual  No    1120    95
 MIT License - Ver [LICENSE](../LICENSE)
 
 ### Autor
-**Daniel Duque Ortega Mutis**
+**Duque Ortega Mutis (DuqueOM)**
 
 ### Contacto
 - Portfolio: [github.com/DuqueOM](https://github.com/DuqueOM)

@@ -23,8 +23,6 @@ Este portfolio demuestra **capacidades nivel Senior/Enterprise** en:
 - ✅ **APIs**: FastAPI, Streamlit, containerización Docker
 - ✅ **Cloud & DevOps**: GitHub Actions, DVC, MLflow
 
-**Score Global**: 87/100 (Senior/Enterprise Level) ⭐⭐⭐⭐⭐
-
 ---
 
 ## 📊 Proyectos Destacados
@@ -264,24 +262,53 @@ docker run -p 8000:8000 proyecto:latest
 Portafolio-ML-MLOps/
 ├── BankChurn-Predictor/           ⭐ Tier-1 (85% coverage)
 │   ├── src/bankchurn/             # Arquitectura modular
+│   │   ├── training.py            # Entrenamiento
+│   │   ├── evaluation.py          # Evaluación
+│   │   ├── prediction.py          # Inferencia
+│   │   └── cli.py                 # CLI moderna
 │   ├── app/                       # FastAPI
 │   ├── tests/                     # 85% coverage
+│   ├── monitoring/                # Drift detection
 │   └── README.md                  # 741 líneas
 │
 ├── CarVision-Market-Intelligence/
-│   ├── app/streamlit_app.py       # Dashboard interactivo
+│   ├── app/
+│   │   ├── streamlit_app.py       # Dashboard interactivo
+│   │   └── fastapi_app.py         # API REST
 │   ├── models/                    # R² > 0.90
+│   ├── scripts/                   # Training & analysis
 │   └── README.md                  # 600+ líneas
 │
 ├── TelecomAI-Customer-Intelligence/
-│   ├── app/fastapi_app.py         # API REST
+│   ├── app/
+│   │   └── fastapi_app.py         # API REST
 │   ├── models/                    # AUC-ROC > 0.85
+│   ├── scripts/                   # Training pipeline
 │   └── README.md                  # 400+ líneas
 │
 ├── Chicago-Mobility-Analytics/
+│   ├── notebooks/                 # Análisis exploratorio
+│   ├── scripts/                   # Feature engineering
+│   ├── models/                    # LightGBM models
+│   └── README.md                  # Documentación completa
+│
 ├── GoldRecovery-Process-Optimizer/
+│   ├── notebooks/                 # Análisis de proceso
+│   ├── scripts/                   # Optimización
+│   ├── models/                    # Multi-target models
+│   └── README.md                  # Documentación completa
+│
 ├── Gaming-Market-Intelligence/
+│   ├── notebooks/                 # Análisis estadístico
+│   ├── scripts/                   # Hypothesis testing
+│   ├── data/                      # Datasets procesados
+│   └── README.md                  # Documentación completa
+│
 ├── OilWell-Location-Optimizer/
+│   ├── notebooks/                 # Bootstrap analysis
+│   ├── scripts/                   # Optimización financiera
+│   ├── models/                    # Regression models
+│   └── README.md                  # Documentación completa
 │
 ├── common_utils/                   # Utilities compartidos
 │   ├── __init__.py
@@ -294,14 +321,13 @@ Portafolio-ML-MLOps/
 ├── infra/
 │   └── docker-compose-mlflow.yml  # Stack MLflow
 │
-├── audit-reports/                  # Auditorías de calidad
-│   ├── REVIEW_README.md
-│   ├── review-report.md
-│   └── scripts/                   # Automation scripts
+├── docs/                          # Documentación adicional
 │
-├── .gitignore                     # 96 líneas
+├── .gitignore                     # Control de versiones
 ├── .pre-commit-config.yaml        # Hooks de calidad
 ├── LICENSE                        # MIT
+├── CHANGELOG.md                   # Historial de cambios
+├── CONTRIBUTING.md                # Guía de contribución
 └── README.md                      # Este archivo
 ```
 
@@ -360,10 +386,16 @@ Portafolio-ML-MLOps/
 
 ## 📚 Recursos Adicionales
 
-### Documentación
-- [Historial de Cambios](CHANGELOG.md)
-- [Guía de Contribución](CONTRIBUTING.md)
-- [Licencia MIT](LICENSE)
+### Documentación Técnica
+- [Aplicación de Auditorías](APLICACION_AUDITORIAS.md)
+- [Mejoras CI/CD](MEJORAS_CI_PROYECTOS.md)
+- [Implementación Final](IMPLEMENTACION_FINAL.md)
+- [Checklist Pendientes](CHECKLIST_PENDIENTES.md)
+
+### Scripts de Utilidad
+- [CI Checks](audit-reports/ci_checks.sh)
+- [Security Scan](audit-reports/security_scan.sh)
+- [Quick Setup](audit-reports/quick_setup.sh)
 
 ---
 
@@ -407,7 +439,7 @@ Los datasets utilizados son educativos/simulados. Ver `DATA_LICENSE` en cada pro
 
 ## 👤 Autor
 
-**Daniel Duque Ortega Mutis (DuqueOM)**
+**Duque Ortega Mutis (DuqueOM)**
 
 Ingeniero de Machine Learning & MLOps Engineer
 
@@ -466,6 +498,5 @@ Cloud ████████████ 60%
 
 ---
 
-**Última actualización**: Noviembre 2024  
-**Score**: 87/100 (Senior/Enterprise)  
+**Última actualización**: Noviembre 2025   
 **Status**: ✅ Production-Ready

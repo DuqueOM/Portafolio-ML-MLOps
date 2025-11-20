@@ -455,7 +455,7 @@ El dashboard genera automáticamente:
 MIT License - Ver [LICENSE](../LICENSE)
 
 ### Autor
-**Daniel Duque Ortega Mutis (DuqueOM)**
+**Duque Ortega Mutis (DuqueOM)**
 
 ### Contacto
 - **Portfolio**: [github.com/DuqueOM/Portafolio-ML-MLOps](https://github.com/DuqueOM/Portafolio-ML-MLOps)

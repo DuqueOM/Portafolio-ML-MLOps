@@ -720,7 +720,7 @@ Top 5 features más importantes:
 Este proyecto está bajo la licencia **MIT**. Ver [LICENSE](../LICENSE) para más detalles.
 
 ### Autor
-**Daniel Duque Ortega Mutis (DuqueOM)**
+**Duque Ortega Mutis (DuqueOM)**
 
 ### Contacto
 - **Portfolio**: [github.com/DuqueOM/Portafolio-ML-MLOps](https://github.com/DuqueOM/Portafolio-ML-MLOps)

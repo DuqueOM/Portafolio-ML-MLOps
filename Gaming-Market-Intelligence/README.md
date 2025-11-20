@@ -172,7 +172,7 @@ pytest --cov=. --cov-report=term-missing
 
 MIT License - Ver [LICENSE](../LICENSE)
 
-**Autor**: Daniel Duque Ortega Mutis
+**Autor**: Duque Ortega Mutis (DuqueOM)
 
 ---
 

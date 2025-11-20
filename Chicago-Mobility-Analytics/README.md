@@ -166,7 +166,7 @@ Coverage: 50%
 
 MIT License - Ver [LICENSE](../LICENSE)
 
-**Autor**: Daniel Duque Ortega Mutis
+**Autor**: Duque Ortega Mutis (DuqueOM)
 
 ---
 
