@@ -7,7 +7,6 @@
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue.svg)](https://github.com/features/actions)
 [![Coverage](https://img.shields.io/badge/Coverage-70%25-brightgreen.svg)](tests/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Portfolio Score](https://img.shields.io/badge/Score-87%2F100-success.svg)](#)
 
 > **Portfolio profesional con 7 proyectos end-to-end de Machine Learning y MLOps, implementando arquitecturas modulares, APIs REST, CI/CD automatizado, testing comprehensivo y despliegue containerizado.**
 
@@ -465,17 +464,17 @@ Ingeniero de Machine Learning & MLOps Engineer
 - 🧪 **70% coverage** promedio
 - 📝 **4,000+ líneas** de documentación
 - ✅ **100% P0/P1** issues resueltos
-- ⚡ **4 jobs** paralelos en CI
+- ⚡ **7 jobs** paralelos en CI
 - 🔒 **0 vulnerabilidades** de seguridad
 
 ### Tecnologías Dominadas
 ```
-Python ████████████████████████ 100%
-Scikit-learn ███████████████████ 95%
-FastAPI ████████████████████ 90%
-Docker ███████████████████ 85%
-MLOps ██████████████████ 80%
-Cloud ████████████ 60%
+Python 
+Scikit-learn 
+FastAPI 
+Docker 
+MLOps 
+Cloud 
 ```
 
 ---
