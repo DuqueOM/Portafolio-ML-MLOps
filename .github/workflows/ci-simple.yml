@@ -1,0 +1,31 @@
+name: CI Simple Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-simple:
+    name: Simple test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: List projects
+        run: |
+          echo "=== Proyectos encontrados ==="
+          ls -la | grep "^d"
+          
+      - name: Test BankChurn structure
+        run: |
+          echo "=== BankChurn-Predictor ==="
+          cd BankChurn-Predictor
+          ls -la requirements*
+          echo "=== Instalando deps ==="
+          pip install -r requirements.in || pip install -r requirements.txt
+          echo "✓ Dependencias instaladas"
