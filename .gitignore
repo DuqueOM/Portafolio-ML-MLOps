@@ -94,3 +94,15 @@ Thumbs.db
 *.tmp
 *.temp
 check_results/
+backup_*/
+audit-reports/
+
+# Documentation temporales (resúmenes de trabajo)
+*SUMMARY*.md
+*IMPLEMENTACION*.md
+*OPTIMIZATION*.md
+*REFACTORING*.md
+*RESUMEN*.md
+*CHECKLIST*.md
+*VERIFICATION*.md
+*IMPROVEMENTS*.md

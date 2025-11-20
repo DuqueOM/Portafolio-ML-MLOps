@@ -360,16 +360,10 @@ Portafolio-ML-MLOps/
 
 ## 📚 Recursos Adicionales
 
-### Documentación Técnica
-- [Aplicación de Auditorías](APLICACION_AUDITORIAS.md)
-- [Mejoras CI/CD](MEJORAS_CI_PROYECTOS.md)
-- [Implementación Final](IMPLEMENTACION_FINAL.md)
-- [Checklist Pendientes](CHECKLIST_PENDIENTES.md)
-
-### Scripts de Utilidad
-- [CI Checks](audit-reports/ci_checks.sh)
-- [Security Scan](audit-reports/security_scan.sh)
-- [Quick Setup](audit-reports/quick_setup.sh)
+### Documentación
+- [Historial de Cambios](CHANGELOG.md)
+- [Guía de Contribución](CONTRIBUTING.md)
+- [Licencia MIT](LICENSE)
 
 ---
 
