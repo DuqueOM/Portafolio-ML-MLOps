@@ -1,0 +1,201 @@
+{
+  "model_type": "BankChurnPredictor",
+  "version": "1.0.0",
+  "training_date": "2025-11-20 10:51:28",
+  "config": {
+    "data": {
+      "target_column": "Exited",
+      "drop_columns": [
+        "RowNumber",
+        "CustomerId",
+        "Surname"
+      ],
+      "categorical_features": [
+        "Geography",
+        "Gender"
+      ],
+      "numerical_features": [
+        "CreditScore",
+        "Age",
+        "Tenure",
+        "Balance",
+        "NumOfProducts",
+        "HasCrCard",
+        "IsActiveMember",
+        "EstimatedSalary"
+      ]
+    },
+    "training": {
+      "test_size": 0.2,
+      "validation_size": 0.2,
+      "random_state": 42,
+      "stratify": true,
+      "cv_folds": 5,
+      "cv_shuffle": true,
+      "primary_metric": "f1",
+      "secondary_metrics": [
+        "roc_auc",
+        "precision",
+        "recall",
+        "accuracy"
+      ]
+    },
+    "model": {
+      "type": "ensemble",
+      "resampling_strategy": "oversample",
+      "ensemble": {
+        "voting": "soft",
+        "weights": [
+          0.4,
+          0.6
+        ]
+      },
+      "logistic_regression": {
+        "C": 0.1,
+        "class_weight": "balanced",
+        "solver": "liblinear",
+        "max_iter": 1000
+      },
+      "random_forest": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 10,
+        "min_samples_leaf": 5,
+        "class_weight": "balanced_subsample"
+      }
+    },
+    "hyperparameter_optimization": {
+      "method": "optuna",
+      "n_trials": 100,
+      "timeout": 3600,
+      "search_space": {
+        "lr_C": [
+          0.01,
+          10.0
+        ],
+        "rf_n_estimators": [
+          50,
+          200
+        ],
+        "rf_max_depth": [
+          5,
+          20
+        ],
+        "rf_min_samples_split": [
+          5,
+          20
+        ],
+        "ensemble_lr_weight": [
+          0.1,
+          0.9
+        ]
+      }
+    },
+    "preprocessing": {
+      "categorical_encoding": {
+        "method": "onehot",
+        "drop_first": true,
+        "handle_unknown": "ignore"
+      },
+      "numerical_scaling": {
+        "method": "standard"
+      },
+      "feature_engineering": {
+        "create_interactions": false,
+        "create_polynomials": false,
+        "polynomial_degree": 2
+      }
+    },
+    "evaluation": {
+      "classification_metrics": [
+        "accuracy",
+        "precision",
+        "recall",
+        "f1",
+        "roc_auc",
+        "matthews_corrcoef"
+      ],
+      "error_analysis": {
+        "confusion_matrix": true,
+        "classification_report": true,
+        "feature_importance": true
+      },
+      "bootstrap": {
+        "n_iterations": 1000,
+        "confidence_level": 0.95
+      }
+    },
+    "logging": {
+      "level": "INFO",
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+      "handlers": {
+        "file": {
+          "enabled": true,
+          "filename": "logs/bankchurn.log",
+          "max_bytes": 10485760,
+          "backup_count": 5
+        },
+        "console": {
+          "enabled": true,
+          "stream": "stdout"
+        }
+      }
+    },
+    "paths": {
+      "data": {
+        "raw": "data/raw/",
+        "processed": "data/processed/"
+      },
+      "models": {
+        "directory": "models/",
+        "filename_template": "best_model_{timestamp}.pkl",
+        "preprocessor_template": "preprocessor_{timestamp}.pkl"
+      },
+      "results": {
+        "directory": "results/",
+        "metrics": "results/metrics/",
+        "plots": "results/plots/",
+        "reports": "results/reports/"
+      }
+    },
+    "api": {
+      "host": "0.0.0.0",
+      "port": 8000,
+      "reload": false,
+      "rate_limits": {
+        "requests_per_minute": 1000,
+        "batch_size_limit": 1000
+      },
+      "cors": {
+        "allow_origins": [
+          "*"
+        ],
+        "allow_methods": [
+          "GET",
+          "POST"
+        ],
+        "allow_headers": [
+          "*"
+        ]
+      }
+    },
+    "deployment": {
+      "environment": "development",
+      "docker": {
+        "image_name": "bankchurn-predictor",
+        "tag": "latest",
+        "port_mapping": "8000:8000"
+      },
+      "monitoring": {
+        "health_check_interval": 30,
+        "metrics_collection": true,
+        "log_predictions": false
+      }
+    },
+    "security": {
+      "api_key_required": false,
+      "rate_limiting": true,
+      "input_validation": true
+    }
+  }
+}
