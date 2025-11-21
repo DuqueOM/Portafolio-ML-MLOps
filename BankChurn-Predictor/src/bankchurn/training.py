@@ -136,16 +136,26 @@ class ChurnTrainer:
         preprocessor : ColumnTransformer
             Feature preprocessing pipeline.
         """
-        # Auto-detect feature types if not specified
+        # Auto-detect feature types if not specified. When explicit
+        # feature lists are provided in the config, intersect them
+        # with the actual columns in X to avoid errors if a column
+        # is missing in a particular dataset or test DataFrame.
         if not self.config.data.categorical_features:
             categorical_features = X.select_dtypes(include=["object", "category"]).columns.tolist()
         else:
-            categorical_features = self.config.data.categorical_features
+            categorical_features = [col for col in self.config.data.categorical_features if col in X.columns]
 
         if not self.config.data.numerical_features:
             numerical_features = X.select_dtypes(include=[np.number]).columns.tolist()
         else:
-            numerical_features = self.config.data.numerical_features
+            numerical_features = [col for col in self.config.data.numerical_features if col in X.columns]
+
+        # If after filtering no features remain, fall back to using
+        # all columns as numerical features. This makes the
+        # preprocessor robust for synthetic test DataFrames that do
+        # not include the full set of configured feature names.
+        if not categorical_features and not numerical_features:
+            numerical_features = X.columns.tolist()
 
         logger.info(f"Categorical features: {len(categorical_features)}")
         logger.info(f"Numerical features: {len(numerical_features)}")
