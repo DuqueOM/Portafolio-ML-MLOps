@@ -1,0 +1,4 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = /home/duque_om/projects/Projects Tripe Ten/.dvc-storage
