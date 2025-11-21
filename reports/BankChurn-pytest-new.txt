@@ -1,0 +1,22 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.1, pluggy-1.6.0
+rootdir: /home/duque_om/projects/Projects Tripe Ten/BankChurn-Predictor
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.11.0, Faker-38.0.0, cov-7.0.0
+collected 107 items
+
+tests/test_config.py ...............                                     [ 14%]
+tests/test_data.py ..                                                    [ 15%]
+tests/test_evaluation.py F
+
+=================================== FAILURES ===================================
+____________________ TestModelEvaluator.test_initialization ____________________
+tests/test_evaluation.py:74: in test_initialization
+    assert evaluator.metrics_ is None
+E   assert {} is None
+E    +  where {} = <src.bankchurn.evaluation.ModelEvaluator object at 0x72c86c5a72f0>.metrics_
+=========================== short test summary info ============================
+FAILED tests/test_evaluation.py::TestModelEvaluator::test_initialization - as...
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+======================== 1 failed, 17 passed in 10.46s =========================

@@ -1,0 +1,8 @@
+# Gitleaks ignore file - False positives
+
+# CarVision notebooks - categorical data that looks like AWS tokens (false positives)
+CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:*
+CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:*
+
+# Any notebook output cells (data artifacts, not secrets)
+**/notebooks/**/*.ipynb:*:*

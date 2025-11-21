@@ -1,0 +1,92 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.1, pluggy-1.6.0
+rootdir: /home/duque_om/projects/Projects Tripe Ten/BankChurn-Predictor
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.11.0, Faker-38.0.0, cov-7.0.0
+collected 107 items
+
+tests/test_config.py ...............                                     [ 14%]
+tests/test_data.py ..                                                    [ 15%]
+tests/test_evaluation.py .FFFFF
+
+=================================== FAILURES ===================================
+____________________ TestModelEvaluator.test_evaluate_model ____________________
+tests/test_evaluation.py:81: in test_evaluate_model
+    metrics = evaluator.evaluate(X_test, y_test)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/bankchurn/evaluation.py:103: in evaluate
+    X_transformed = self.preprocessor.transform(X)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:316: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:1072: in transform
+    check_is_fitted(self)
+.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1754: in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+E   sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+_______________ TestModelEvaluator.test_evaluate_stores_metrics ________________
+tests/test_evaluation.py:101: in test_evaluate_stores_metrics
+    evaluator.evaluate(X_test, y_test)
+src/bankchurn/evaluation.py:103: in evaluate
+    X_transformed = self.preprocessor.transform(X)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:316: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:1072: in transform
+    check_is_fitted(self)
+.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1754: in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+E   sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+___________________ TestModelEvaluator.test_confusion_matrix ___________________
+tests/test_evaluation.py:110: in test_confusion_matrix
+    evaluator.evaluate(X_test, y_test)
+src/bankchurn/evaluation.py:103: in evaluate
+    X_transformed = self.preprocessor.transform(X)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:316: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:1072: in transform
+    check_is_fitted(self)
+.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1754: in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+E   sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+________________ TestModelEvaluator.test_classification_report _________________
+tests/test_evaluation.py:121: in test_classification_report
+    evaluator.evaluate(X_test, y_test)
+src/bankchurn/evaluation.py:103: in evaluate
+    X_transformed = self.preprocessor.transform(X)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:316: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:1072: in transform
+    check_is_fitted(self)
+.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1754: in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+E   sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+______________________ TestModelEvaluator.test_roc_curve _______________________
+tests/test_evaluation.py:130: in test_roc_curve
+    evaluator.evaluate(X_test, y_test)
+src/bankchurn/evaluation.py:103: in evaluate
+    X_transformed = self.preprocessor.transform(X)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:316: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:1072: in transform
+    check_is_fitted(self)
+.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1754: in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+E   sklearn.exceptions.NotFittedError: This StandardScaler instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+=========================== short test summary info ============================
+FAILED tests/test_evaluation.py::TestModelEvaluator::test_evaluate_model - sk...
+FAILED tests/test_evaluation.py::TestModelEvaluator::test_evaluate_stores_metrics
+FAILED tests/test_evaluation.py::TestModelEvaluator::test_confusion_matrix - ...
+FAILED tests/test_evaluation.py::TestModelEvaluator::test_classification_report
+FAILED tests/test_evaluation.py::TestModelEvaluator::test_roc_curve - sklearn...
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 5 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+========================= 5 failed, 18 passed in 8.88s =========================

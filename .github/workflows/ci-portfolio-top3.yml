@@ -1,0 +1,154 @@
+name: CI Portfolio TOP-3
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - TelecomAI-Customer-Intelligence
+          - CarVision-Market-Intelligence
+          - BankChurn-Predictor
+      fail-fast: false
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.project }}-${{ hashFiles(format('{0}/requirements*.txt', matrix.project)) }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.project }}-
+            ${{ runner.os }}-pip-
+      
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          elif [ -f requirements.in ]; then
+            pip install -r requirements.in
+          fi
+          pip install pytest pytest-cov coverage
+      
+      - name: Run tests with coverage
+        working-directory: ${{ matrix.project }}
+        run: |
+          pytest --maxfail=1 --disable-warnings -v --cov=src --cov-report=term --cov-report=xml
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ${{ matrix.project }}/coverage.xml
+          flags: ${{ matrix.project }}
+          name: ${{ matrix.project }}-coverage
+          fail_ci_if_error: false
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Gitleaks scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install bandit
+        run: pip install bandit[toml]
+      
+      - name: Run Bandit security scan
+        run: |
+          bandit -r */src -f json -o reports/bandit-report.json || true
+          bandit -r */src -f txt
+      
+      - name: Upload security reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-reports
+          path: reports/*-report.json
+
+  docker-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Check for Dockerfiles
+        id: check_dockerfiles
+        run: |
+          if find . -name "Dockerfile" -o -name "*.dockerfile" | grep -q .; then
+            echo "found=true" >> $GITHUB_OUTPUT
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Build Docker images
+        if: steps.check_dockerfiles.outputs.found == 'true'
+        run: |
+          for dockerfile in $(find . -name "Dockerfile" -o -name "*.dockerfile"); do
+            dir=$(dirname $dockerfile)
+            echo "Building image from $dockerfile..."
+            docker build -t ml-portfolio:${dir//\//-} -f $dockerfile $dir || true
+          done
+
+  quality-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install quality tools
+        run: |
+          pip install ruff mypy black isort
+      
+      - name: Run ruff linter
+        run: |
+          ruff check . --output-format=github || true
+      
+      - name: Run black formatter check
+        run: |
+          black --check . || true
+      
+      - name: Run isort import check
+        run: |
+          isort --check-only . || true
+      
+      - name: Run mypy type check
+        run: |
+          mypy --ignore-missing-imports */src || true

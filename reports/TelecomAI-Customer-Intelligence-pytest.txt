@@ -1,0 +1,36 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.0.1, pluggy-1.6.0
+rootdir: /home/duque_om/projects/Projects Tripe Ten/TelecomAI-Customer-Intelligence
+configfile: pyproject.toml
+testpaths: tests
+plugins: Faker-38.2.0, dash-3.3.0, anyio-4.11.0, cov-7.0.0
+collected 15 items
+
+tests/test_api_e2e.py ....                                               [ 26%]
+tests/test_data.py .                                                     [ 33%]
+tests/test_main_workflow.py ...                                          [ 53%]
+tests/test_model.py .                                                    [ 60%]
+tests/test_preprocess_and_evaluate_utils.py ......                       [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.5-final-0 ________________
+
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+app/__init__.py                                   0      0   100%
+app/example_load.py                              17     17     0%   1-26
+app/fastapi_app.py                               38      3    92%   28, 43-44
+data/__init__.py                                  0      0   100%
+data/preprocess.py                               28      0   100%
+evaluate.py                                      54      2    96%   34-35
+main.py                                         158     45    72%   72, 99, 102-106, 109-140, 195, 219-239, 243-258, 262
+tests/conftest.py                                13      0   100%
+tests/test_api_e2e.py                            44      1    98%   21
+tests/test_data.py                               16      0   100%
+tests/test_main_workflow.py                      52      0   100%
+tests/test_model.py                              23      0   100%
+tests/test_preprocess_and_evaluate_utils.py      64      0   100%
+---------------------------------------------------------------------------
+TOTAL                                           507     68    87%
+Required test coverage of 72% reached. Total coverage: 86.59%
+======================= 15 passed, 2 warnings in 25.43s ========================

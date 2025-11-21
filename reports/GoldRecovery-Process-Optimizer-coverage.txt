@@ -1,0 +1,17 @@
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+app/__init__.py                   0      0   100%
+app/example_load.py              44     44     0%   1-58
+app/fastapi_app.py               39     39     0%   1-61
+app/streamlit_dashboard.py       25     25     0%   1-42
+data/__init__.py                  0      0   100%
+data/preprocess.py               62     15    76%   95-97, 101-103, 110-132
+evaluate.py                      61     61     0%   2-103
+main.py                         302    218    28%   80, 87, 109-129, 141-165, 171-209, 223, 297-299, 302, 361, 388-417, 421-431, 435-442, 449, 468-508, 513-521, 526-781, 785
+tests/conftest.py                13      0   100%
+tests/test_data.py               19      0   100%
+tests/test_fairness.py           20      0   100%
+tests/test_model.py              15      0   100%
+tests/test_preprocessing.py      32      0   100%
+-----------------------------------------------------------
+TOTAL                           632    402    36%

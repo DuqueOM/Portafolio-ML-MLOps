@@ -1,0 +1,35 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.0.1, pluggy-1.6.0
+rootdir: /home/duque_om/projects/Projects Tripe Ten/CarVision-Market-Intelligence
+configfile: pyproject.toml
+testpaths: tests
+plugins: Faker-38.2.0, anyio-4.11.0, cov-7.0.0
+collected 13 items
+
+tests/test_data.py ..                                                    [ 15%]
+tests/test_fairness.py .                                                 [ 23%]
+tests/test_main_workflow.py ..                                           [ 38%]
+tests/test_model.py .                                                    [ 46%]
+tests/test_preprocess_and_evaluate_utils.py .......                      [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.5-final-0 ________________
+
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+data/__init__.py                                  0      0   100%
+data/preprocess.py                               61      2    97%   176-177
+evaluate.py                                     101     10    90%   118, 151, 181-189, 193
+main.py                                         310    124    60%   68, 93-112, 124-152, 159-160, 164-184, 188-203, 207-220, 224-254, 258-304, 311, 315-378, 383-476, 649, 837-838, 863, 874-878, 887, 893-895, 899
+tests/__init__.py                                 0      0   100%
+tests/conftest.py                                13      0   100%
+tests/test_data.py                               15      0   100%
+tests/test_fairness.py                           22      0   100%
+tests/test_main_workflow.py                      80      0   100%
+tests/test_model.py                              17      0   100%
+tests/test_preprocess_and_evaluate_utils.py      59      0   100%
+tests/utils_carvision.py                         36      0   100%
+---------------------------------------------------------------------------
+TOTAL                                           714    136    81%
+Required test coverage of 75% reached. Total coverage: 80.95%
+======================== 13 passed in 117.66s (0:01:57) ========================

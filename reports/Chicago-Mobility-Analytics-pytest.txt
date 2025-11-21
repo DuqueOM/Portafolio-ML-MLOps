@@ -1,0 +1,35 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.0.1, pluggy-1.6.0
+rootdir: /home/duque_om/projects/Projects Tripe Ten/Chicago-Mobility-Analytics
+configfile: pyproject.toml
+testpaths: tests
+plugins: Faker-38.2.0, anyio-4.11.0, cov-7.0.0
+collected 16 items
+
+tests/test_data.py .                                                     [  6%]
+tests/test_fairness.py .                                                 [ 12%]
+tests/test_model.py .                                                    [ 18%]
+tests/test_preprocessing.py .............                                [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.5-final-0 ________________
+
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+app/__init__.py                   0      0   100%
+app/example_load.py              24     24     0%   1-35
+app/fastapi_app.py               34     34     0%   7-74
+data/__init__.py                  0      0   100%
+data/preprocess.py               51     12    76%   27, 36-37, 85-87, 92-97, 105
+evaluate.py                      27     27     0%   7-58
+main.py                         119     62    48%   46, 89-90, 98-99, 111-128, 134-159, 164-180, 186-207, 211
+tests/__init__.py                 0      0   100%
+tests/conftest.py                13      0   100%
+tests/test_data.py               12      0   100%
+tests/test_fairness.py           21      0   100%
+tests/test_model.py              12      0   100%
+tests/test_preprocessing.py      51      0   100%
+-----------------------------------------------------------
+TOTAL                           364    159    56%
+Required test coverage of 50% reached. Total coverage: 56.32%
+======================= 16 passed, 23 warnings in 19.96s =======================

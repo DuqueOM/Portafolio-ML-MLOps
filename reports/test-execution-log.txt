@@ -1,0 +1,138 @@
+=========================================
+Running Tests for TOP-3 Projects
+=========================================
+
+
+=========================================
+Testing: BankChurn-Predictor
+=========================================
+Installing dependencies...
+Running pytest...
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.1, pluggy-1.6.0
+rootdir: /home/duque_om/projects/Projects Tripe Ten/BankChurn-Predictor
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.11.0, Faker-38.0.0, cov-7.0.0
+collected 113 items
+
+tests/test_cli_basic.py ...                                              [  2%]
+tests/test_cli_complete.py ......                                        [  7%]
+tests/test_comprehensive_boost.py .....F
+
+=================================== FAILURES ===================================
+_________________ test_trainer_preprocessor_feature_detection __________________
+.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3812: in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/index.pyx:167: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:196: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7088: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7096: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+E   KeyError: 'Geography'
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.12/site-packages/sklearn/utils/_indexing.py:443: in _get_column_indices
+    col_idx = all_columns.get_loc(col)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3819: in get_loc
+    raise KeyError(key) from err
+E   KeyError: 'Geography'
+
+The above exception was the direct cause of the following exception:
+tests/test_comprehensive_boost.py:170: in test_trainer_preprocessor_feature_detection
+    X_transformed = preprocessor.fit_transform(X)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:316: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/base.py:1365: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py:988: in fit_transform
+    self._validate_column_callables(X)
+.venv/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py:541: in _validate_column_callables
+    transformer_to_input_indices[name] = _get_column_indices(X, columns)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sklearn/utils/_indexing.py:451: in _get_column_indices
+    raise ValueError("A given column is not a column of the dataframe") from e
+E   ValueError: A given column is not a column of the dataframe
+=========================== short test summary info ============================
+FAILED tests/test_comprehensive_boost.py::test_trainer_preprocessor_feature_detection
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+======================== 1 failed, 14 passed in 12.30s =========================
+✓ Tests passed for BankChurn-Predictor
+Generating coverage report...
+No data to report.
+
+=========================================
+Testing: CarVision-Market-Intelligence
+=========================================
+Installing dependencies...
+Running pytest...
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.0.1, pluggy-1.6.0
+rootdir: /home/duque_om/projects/Projects Tripe Ten/CarVision-Market-Intelligence
+configfile: pyproject.toml
+testpaths: tests
+plugins: Faker-38.2.0, anyio-4.11.0, cov-7.0.0
+collected 13 items
+
+tests/test_data.py ..                                                    [ 15%]
+tests/test_fairness.py .                                                 [ 23%]
+tests/test_main_workflow.py ..                                           [ 38%]
+tests/test_model.py .                                                    [ 46%]
+tests/test_preprocess_and_evaluate_utils.py ......./home/duque_om/projects/Projects Tripe Ten/CarVision-Market-Intelligence/.venv/lib/python3.13/site-packages/coverage/inorout.py:521: CoverageWarning: Module src was never imported. (module-not-imported); see https://coverage.readthedocs.io/en/7.12.0/messages.html#warning-module-not-imported
+  self.warn(f"Module {pkg} was never imported.", slug="module-not-imported")
+                      [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.5-final-0 ________________
+
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+data/__init__.py                                  0      0   100%
+data/preprocess.py                               61      2    97%   176-177
+evaluate.py                                     101     10    90%   118, 151, 181-189, 193
+main.py                                         310    124    60%   68, 93-112, 124-152, 159-160, 164-184, 188-203, 207-220, 224-254, 258-304, 311, 315-378, 383-476, 649, 837-838, 863, 874-878, 887, 893-895, 899
+tests/__init__.py                                 0      0   100%
+tests/conftest.py                                13      0   100%
+tests/test_data.py                               15      0   100%
+tests/test_fairness.py                           22      0   100%
+tests/test_main_workflow.py                      80      0   100%
+tests/test_model.py                              17      0   100%
+tests/test_preprocess_and_evaluate_utils.py      59      0   100%
+tests/utils_carvision.py                         36      0   100%
+---------------------------------------------------------------------------
+TOTAL                                           714    136    81%
+Required test coverage of 75% reached. Total coverage: 80.95%
+======================== 13 passed in 189.45s (0:03:09) ========================
+✓ Tests passed for CarVision-Market-Intelligence
+Generating coverage report...
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+data/__init__.py                                  0      0   100%
+data/preprocess.py                               61      2    97%   176-177
+evaluate.py                                     101     10    90%   118, 151, 181-189, 193
+main.py                                         310    124    60%   68, 93-112, 124-152, 159-160, 164-184, 188-203, 207-220, 224-254, 258-304, 311, 315-378, 383-476, 649, 837-838, 863, 874-878, 887, 893-895, 899
+tests/__init__.py                                 0      0   100%
+tests/conftest.py                                13      0   100%
+tests/test_data.py                               15      0   100%
+tests/test_fairness.py                           22      0   100%
+tests/test_main_workflow.py                      80      0   100%
+tests/test_model.py                              17      0   100%
+tests/test_preprocess_and_evaluate_utils.py      59      0   100%
+tests/utils_carvision.py                         36      0   100%
+---------------------------------------------------------------------------
+TOTAL                                           714    136    81%
+
+=========================================
+Testing: TelecomAI-Customer-Intelligence
+=========================================
+Installing dependencies...
+ERROR: In --require-hashes mode, all requirements must have their versions pinned with ==. These do not:
+    setuptools>=41.1.0 from https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl (from jupyterlab==4.4.10->-r requirements.txt (line 1038))

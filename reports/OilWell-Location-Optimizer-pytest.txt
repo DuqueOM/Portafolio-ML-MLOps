@@ -1,0 +1,34 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.0.1, pluggy-1.6.0
+rootdir: /home/duque_om/projects/Projects Tripe Ten/OilWell-Location-Optimizer
+configfile: pyproject.toml
+testpaths: tests
+plugins: Faker-38.2.0, dash-3.3.0, anyio-4.11.0, cov-7.0.0
+collected 17 items
+
+tests/test_api_e2e.py .                                                  [  5%]
+tests/test_data.py ..                                                    [ 17%]
+tests/test_model.py ..                                                   [ 29%]
+tests/test_preprocessing.py ............                                 [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.5-final-0 ________________
+
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+app/__init__.py                   0      0   100%
+app/example_load.py              34     34     0%   1-43
+app/fastapi_app.py               45      2    96%   40, 60
+data/__init__.py                  0      0   100%
+data/preprocess.py               28     10    64%   17-21, 35-36, 52, 64-65
+evaluate.py                      49      0   100%
+main.py                         131    131     0%   2-273
+tests/conftest.py                13      0   100%
+tests/test_api_e2e.py            21      0   100%
+tests/test_data.py               13      0   100%
+tests/test_model.py              32      0   100%
+tests/test_preprocessing.py      45      0   100%
+-----------------------------------------------------------
+TOTAL                           411    177    57%
+Required test coverage of 50% reached. Total coverage: 56.93%
+======================== 17 passed, 2 warnings in 9.55s ========================

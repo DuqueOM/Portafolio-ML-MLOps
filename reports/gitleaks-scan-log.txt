@@ -1,0 +1,322 @@
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+Finding:     ...wKMOQQAAAABAuQBBAAAA[1;3;mAIDABEEAAAAA0GH5QAAA[0mAAB4pQFBAAAAAEAqA0EA...
+Secret:      [1;3;mAIDABEEAAAAA0GH5QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.560964
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...wDb0QAAAAAAgUvxAAAAA[1;3;mAIDABEEAAAAA6B4BQQAA[0mAAAAHvJAAAAAAAAA+H8A...
+Secret:      [1;3;mAIDABEEAAAAA6B4BQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.457717
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...AA+H8AAAAAAAD4fwAAAA[1;3;mAIPABBAAAAAIDABEEAAA[0mAACIUEQQAAAABgaP1AAA...
+Secret:      [1;3;mAIPABBAAAAAIDABEEAAA[0m
+RuleID:      aws-access-token
+Entropy:     1.981496
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...gKf0QAAAAAAA08pAAAAA[1;3;mAIDABEEAAAAAAFL8QAAA[0mAACAlONAAAAAAGRpGEEA...
+Secret:      [1;3;mAIDABEEAAAAAAFL8QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.319241
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...AAAIQAAAAADwR/hAAAAA[1;3;mAIDA9EAAAAAACFAAQQAA[0mAABAMPJAAAAAAADI6UAA...
+Secret:      [1;3;mAIDA9EAAAAAACFAAQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.070951
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...wLULQQAAAADA2QVBAAAA[1;3;mAIDABEEAAAAA0D76QAAA[0mAADgfvBAAAAAAADh6UAA...
+Secret:      [1;3;mAIDABEEAAAAA0D76QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.460964
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...AL3vQAAAAAAAAPh/AAAA[1;3;mAIDABEEAAAAASGEAQQAA[0mAAAAlvlAAAAAAICi+UAA...
+Secret:      [1;3;mAIDABEEAAAAASGEAQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.323220
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...4GsAQQAAAAAA2wpBAAAA[1;3;mAIDA9EAAAAAA8H0BQQAA[0mAAAA8wZBAAAAANDl8UAA...
+Secret:      [1;3;mAIDA9EAAAAAA8H0BQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.560964
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...wLULQQAAAADA2QVBAAAA[1;3;mAIDABEEAAAAA0D76QAAA[0mAADgfvBAAAAAAADh6UAA...
+Secret:      [1;3;mAIDABEEAAAAA0D76QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.460964
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...AEC/QAAAAACASfNAAAAA[1;3;mAIDABEEAAAAAQLMBQQAA[0mAADgHu9AAAAAAICv+0AA...
+Secret:      [1;3;mAIDABEEAAAAAQLMBQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.457717
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...wH/wQAAAAAAA5fBAAAAA[1;3;mAIDABEEAAAAA0MT4QAAA[0mAAAA2/pAAAAAAADz5kAA...
+Secret:      [1;3;mAIDABEEAAAAA0MT4QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.560964
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...AEDvQAAAAAAgqgBBAAAA[1;3;mAIDABEEAAAAAACP5QAAA[0mAADg5vVAAAAAAAAA+H8A...
+Secret:      [1;3;mAIDABEEAAAAAACP5QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.319241
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...AAD4fwAAAABA4g5BAAAA[1;3;mAIDA9EAAAAAAQDYBQQAA[0mAACAzAJBAAAAAECTCkEA...
+Secret:      [1;3;mAIDA9EAAAAAAQDYBQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.323220
+File:        CarVision-Market-Intelligence/notebooks/EDA.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/EDA.ipynb:aws-access-token:247
+
+Finding:     ...wKMOQQAAAABAuQBBAAAA[1;3;mAIDABEEAAAAA0GH5QAAA[0mAAB4pQFBAAAAAEAqA0EA...
+Secret:      [1;3;mAIDABEEAAAAA0GH5QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.560964
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...wDb0QAAAAAAgUvxAAAAA[1;3;mAIDABEEAAAAA6B4BQQAA[0mAAAAHvJAAAAAAAAA+H8A...
+Secret:      [1;3;mAIDABEEAAAAA6B4BQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.457717
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...AA+H8AAAAAAAD4fwAAAA[1;3;mAIPABBAAAAAIDABEEAAA[0mAACIUEQQAAAABgaP1AAA...
+Secret:      [1;3;mAIPABBAAAAAIDABEEAAA[0m
+RuleID:      aws-access-token
+Entropy:     1.981496
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...gKf0QAAAAAAA08pAAAAA[1;3;mAIDABEEAAAAAAFL8QAAA[0mAACAlONAAAAAAGRpGEEA...
+Secret:      [1;3;mAIDABEEAAAAAAFL8QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.319241
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...AAAIQAAAAADwR/hAAAAA[1;3;mAIDA9EAAAAAACFAAQQAA[0mAABAMPJAAAAAAADI6UAA...
+Secret:      [1;3;mAIDA9EAAAAAACFAAQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.070951
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...wLULQQAAAADA2QVBAAAA[1;3;mAIDABEEAAAAA0D76QAAA[0mAADgfvBAAAAAAADh6UAA...
+Secret:      [1;3;mAIDABEEAAAAA0D76QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.460964
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...AL3vQAAAAAAAAPh/AAAA[1;3;mAIDABEEAAAAASGEAQQAA[0mAAAAlvlAAAAAAICi+UAA...
+Secret:      [1;3;mAIDABEEAAAAASGEAQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.323220
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...4GsAQQAAAAAA2wpBAAAA[1;3;mAIDA9EAAAAAA8H0BQQAA[0mAAAA8wZBAAAAANDl8UAA...
+Secret:      [1;3;mAIDA9EAAAAAA8H0BQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.560964
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...wLULQQAAAADA2QVBAAAA[1;3;mAIDABEEAAAAA0D76QAAA[0mAADgfvBAAAAAAADh6UAA...
+Secret:      [1;3;mAIDABEEAAAAA0D76QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.460964
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...AEC/QAAAAACASfNAAAAA[1;3;mAIDABEEAAAAAQLMBQQAA[0mAADgHu9AAAAAAICv+0AA...
+Secret:      [1;3;mAIDABEEAAAAAQLMBQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.457717
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...wH/wQAAAAAAA5fBAAAAA[1;3;mAIDABEEAAAAA0MT4QAAA[0mAAAA2/pAAAAAAADz5kAA...
+Secret:      [1;3;mAIDABEEAAAAA0MT4QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.560964
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...AEDvQAAAAAAgqgBBAAAA[1;3;mAIDABEEAAAAAACP5QAAA[0mAADg5vVAAAAAAAAA+H8A...
+Secret:      [1;3;mAIDABEEAAAAAACP5QAAA[0m
+RuleID:      aws-access-token
+Entropy:     2.319241
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+Finding:     ...AAD4fwAAAABA4g5BAAAA[1;3;mAIDA9EAAAAAAQDYBQQAA[0mAACAzAJBAAAAAECTCkEA...
+Secret:      [1;3;mAIDA9EAAAAAAQDYBQQAA[0m
+RuleID:      aws-access-token
+Entropy:     2.323220
+File:        CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb
+Line:        247
+Commit:      1d6aad72a9a7c105e51f362c3c0b8de105e83a17
+Author:      DuqueOM
+Email:       duqueortegamutis@gmail.com
+Date:        2025-11-18T16:26:57Z
+Fingerprint: 1d6aad72a9a7c105e51f362c3c0b8de105e83a17:CarVision-Market-Intelligence/notebooks/legacy/EDA_original_backup.ipynb:aws-access-token:247
+
+[90m4:00PM[0m [32mINF[0m 90 commits scanned.
+[90m4:00PM[0m [32mINF[0m scan completed in 1m37.4s
+[90m4:00PM[0m [31mWRN[0m leaks found: 26

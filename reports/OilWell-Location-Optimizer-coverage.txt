@@ -1,0 +1,16 @@
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+app/__init__.py                   0      0   100%
+app/example_load.py              34     34     0%   1-43
+app/fastapi_app.py               45      2    96%   40, 60
+data/__init__.py                  0      0   100%
+data/preprocess.py               28     10    64%   17-21, 35-36, 52, 64-65
+evaluate.py                      49      0   100%
+main.py                         131    131     0%   2-273
+tests/conftest.py                13      0   100%
+tests/test_api_e2e.py            21      0   100%
+tests/test_data.py               13      0   100%
+tests/test_model.py              32      0   100%
+tests/test_preprocessing.py      45      0   100%
+-----------------------------------------------------------
+TOTAL                           411    177    57%

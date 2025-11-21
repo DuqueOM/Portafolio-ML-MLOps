@@ -1,0 +1,16 @@
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+data/__init__.py                                  0      0   100%
+data/preprocess.py                               61      2    97%   176-177
+evaluate.py                                     101     10    90%   118, 151, 181-189, 193
+main.py                                         310    124    60%   68, 93-112, 124-152, 159-160, 164-184, 188-203, 207-220, 224-254, 258-304, 311, 315-378, 383-476, 649, 837-838, 863, 874-878, 887, 893-895, 899
+tests/__init__.py                                 0      0   100%
+tests/conftest.py                                13      0   100%
+tests/test_data.py                               15      0   100%
+tests/test_fairness.py                           22      0   100%
+tests/test_main_workflow.py                      80      0   100%
+tests/test_model.py                              17      0   100%
+tests/test_preprocess_and_evaluate_utils.py      59      0   100%
+tests/utils_carvision.py                         36      0   100%
+---------------------------------------------------------------------------
+TOTAL                                           714    136    81%
