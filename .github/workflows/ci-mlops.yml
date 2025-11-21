@@ -121,6 +121,7 @@ jobs:
         project:
           - BankChurn-Predictor
           - CarVision-Market-Intelligence
+          - TelecomAI-Customer-Intelligence
     
     steps:
       - name: Checkout code
@@ -132,12 +133,15 @@ jobs:
       - name: Build Docker image
         working-directory: ${{ matrix.project }}
         run: |
-          docker build -t ml-portfolio-${{ matrix.project }}:${{ github.sha }} .
+          # Use a lowercase repository name and keep the project
+          # identifier only in the tag to satisfy Docker's
+          # lowercase-repository constraint.
+          docker build -t ml-portfolio:${{ matrix.project }}-${{ github.sha }} .
       
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ml-portfolio-${{ matrix.project }}:${{ github.sha }}
+          image-ref: ml-portfolio:${{ matrix.project }}-${{ github.sha }}
           format: 'sarif'
           output: 'trivy-results-${{ matrix.project }}.sarif'
           severity: 'CRITICAL,HIGH'

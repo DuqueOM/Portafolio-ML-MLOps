@@ -75,7 +75,18 @@ class BankChurnConfig(BaseModel):
             raise FileNotFoundError(f"Config file not found: {config_path}")
 
         with open(config_path, "r") as f:
-            config_dict = yaml.safe_load(f)
+            # yaml.safe_load can return None for empty files
+            config_dict = yaml.safe_load(f) or {}
+
+        # Provide sensible defaults for missing sections so that
+        # older/focused configs without an explicit mlflow block
+        # still validate correctly, especially in tests/CI.
+        if "model" not in config_dict:
+            config_dict["model"] = ModelConfig().dict()
+        if "data" not in config_dict:
+            config_dict["data"] = DataConfig().dict()
+        if "mlflow" not in config_dict:
+            config_dict["mlflow"] = MLflowConfig().dict()
 
         logger.info(f"Loaded configuration from {config_path}")
         return cls(**config_dict)
