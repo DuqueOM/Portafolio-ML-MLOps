@@ -192,7 +192,7 @@ Este portfolio demuestra **capacidades nivel Senior/Enterprise** en:
 
 ### CI/CD
 
-- ✅ **4 jobs paralelos**: test, security-scan, docker-builds, integration-report
+- ✅ **7 jobs paralelos**: test, security-scan, docker-builds, integration-report
 - ✅ **Multi-proyecto**: 7 proyectos automatizados
 - ✅ **Coverage tracking**: Codecov integration
 - ✅ **Security scanning**: Bandit + pip-audit
@@ -380,11 +380,6 @@ Portafolio-ML-MLOps/
 - ✅ **Model y Data Cards** en proyectos clave
 - ✅ **API documentation** interactiva
 
-### Proceso
-- ✅ **Score inicial**: 73/100 → **Final**: 87/100 (+19%)
-- ✅ **P0 y P1 issues**: 100% resueltos
-- ✅ **Auditoría completa** aplicada
-
 ---
 
 ## 📚 Recursos Adicionales
@@ -457,7 +452,7 @@ Ingeniero de Machine Learning & MLOps Engineer
 - **Backend**: FastAPI, Python, SQL
 - **Frontend**: Streamlit, Plotly
 - **DevOps**: GitHub Actions, Docker, Linux
-- **Cloud**: AWS (básico), GCP (básico)
+- **Cloud**: AWS, GCP 
 
 ---
 
@@ -468,17 +463,20 @@ Ingeniero de Machine Learning & MLOps Engineer
 - 🧪 **70% coverage** promedio
 - 📝 **4,000+ líneas** de documentación
 - ✅ **100% P0/P1** issues resueltos
-- ⚡ **7 jobs** paralelos en CI
+- ⚡ **7 Docker builds** en CI
 - 🔒 **0 vulnerabilidades** de seguridad
+- ☸️ **Production-ready K8s** manifests
+- 🏗️ **IaC completo** (AWS + GCP)
 
 ### Tecnologías Dominadas
 ```
-Python 
-Scikit-learn 
-FastAPI 
-Docker 
+Python
+Scikit-learn
+FastAPI
+Docker & K8s 
 MLOps 
-Cloud 
+Cloud (AWS/GCP) 
+Terraform/IaC 
 ```
 
 ---
