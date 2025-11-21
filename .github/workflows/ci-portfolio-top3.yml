@@ -40,10 +40,14 @@ jobs:
         working-directory: ${{ matrix.project }}
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          elif [ -f requirements.in ]; then
+          # Prefer simple, non-hashed requirement specs to avoid
+          # --require-hashes issues in CI (e.g. setuptools>= pins).
+          if [ -f requirements.in ]; then
             pip install -r requirements.in
+          elif [ -f requirements-core.txt ]; then
+            pip install -r requirements-core.txt
+          elif [ -f requirements.txt ]; then
+            pip install -r requirements.txt
           fi
           pip install pytest pytest-cov coverage
       
