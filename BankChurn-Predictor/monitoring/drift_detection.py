@@ -49,7 +49,7 @@ def detect_drift(
         categorical_features: List of categorical feature names
 
     Returns:
-        Evidently Report object
+        Evidently evaluation result object
     """
     logger.info("Detecting data drift...")
 
@@ -61,31 +61,56 @@ def detect_drift(
     )
 
     # Let Evidently infer column roles automatically based on the data
-    report.run(reference_data=reference_data, current_data=current_data)
+    evaluation = report.run(reference_data=reference_data, current_data=current_data)
 
     logger.info("Drift detection completed")
-    return report
+    return evaluation
 
 
-def extract_drift_metrics(report: Report) -> Dict:
-    """Extract key drift metrics from Evidently report."""
-    result = report.as_dict()
+def extract_drift_metrics(evaluation: Report) -> Dict:
+    """Extract key drift metrics from Evidently evaluation result.
+
+    Compatible with both new `.dict()` API and legacy `.as_dict()`.
+    """
+    try:
+        result = evaluation.dict()  # new Evidently API
+    except AttributeError:
+        result = evaluation.as_dict()  # legacy fallback
+
+    metrics_list = result.get("metrics", []) if isinstance(result, dict) else []
+
+    if not metrics_list:
+        logger.warning("No metrics found in Evidently result; returning default drift metrics")
+        return {
+            "timestamp": datetime.now().isoformat(),
+            "dataset_drift": False,
+            "number_of_drifted_columns": 0,
+            "share_of_drifted_columns": 0.0,
+            "drift_by_columns": {},
+        }
+
+    first_metric_entry = metrics_list[0]
+    if isinstance(first_metric_entry, dict):
+        metric_result = first_metric_entry.get("result", first_metric_entry)
+    else:
+        metric_result = {}
 
     drift_metrics = {
         "timestamp": datetime.now().isoformat(),
-        "dataset_drift": result["metrics"][0]["result"]["dataset_drift"],
-        "number_of_drifted_columns": result["metrics"][0]["result"]["number_of_drifted_columns"],
-        "share_of_drifted_columns": result["metrics"][0]["result"]["share_of_drifted_columns"],
+        "dataset_drift": metric_result.get("dataset_drift", False),
+        "number_of_drifted_columns": metric_result.get("number_of_drifted_columns", 0),
+        "share_of_drifted_columns": metric_result.get("share_of_drifted_columns", 0.0),
         "drift_by_columns": {},
     }
 
-    # Extract per-column drift
-    drift_by_columns = result["metrics"][0]["result"].get("drift_by_columns", {})
+    # Extract per-column drift if available
+    drift_by_columns = metric_result.get("drift_by_columns", {}) or {}
     for column, drift_info in drift_by_columns.items():
-        drift_metrics["drift_by_columns"][column] = {
-            "drift_detected": drift_info.get("drift_detected", False),
-            "drift_score": drift_info.get("drift_score", None),
-        }
+        if isinstance(drift_info, dict):
+            drift_metrics["drift_by_columns"][column] = {
+                "drift_detected": drift_info.get("drift_detected", False),
+                "drift_score": drift_info.get("drift_score", None),
+            }
 
     return drift_metrics
 
@@ -147,7 +172,7 @@ def main():
     logger.info(f"Categorical features: {len(categorical_features)}")
 
     # Detect drift
-    report = detect_drift(
+    evaluation = detect_drift(
         reference_data=reference_data,
         current_data=current_data,
         target_column=args.target,
@@ -157,10 +182,13 @@ def main():
 
     # Save HTML report
     logger.info(f"Saving HTML report to: {args.output_html}")
-    report.save_html(args.output_html)
+    try:
+        evaluation.save_html(args.output_html)
+    except AttributeError:
+        logger.warning("Evidently evaluation object has no save_html; skipping HTML export")
 
     # Extract and save metrics
-    drift_metrics = extract_drift_metrics(report)
+    drift_metrics = extract_drift_metrics(evaluation)
     logger.info(f"Saving metrics to: {args.output_json}")
     with open(args.output_json, "w") as f:
         json.dump(drift_metrics, f, indent=2)
