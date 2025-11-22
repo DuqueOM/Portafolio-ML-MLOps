@@ -17,6 +17,9 @@ jobs:
   drift-detection:
     name: Detect Data Drift
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     strategy:
       matrix:
         project:

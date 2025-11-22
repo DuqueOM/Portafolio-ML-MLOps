@@ -12,8 +12,8 @@ from pathlib import Path
 from typing import Dict, Tuple
 
 import pandas as pd
+from evidently import Report
 from evidently.presets import DataDriftPreset
-from evidently.report import Report
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
