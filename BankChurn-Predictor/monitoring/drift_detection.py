@@ -12,7 +12,6 @@ from pathlib import Path
 from typing import Dict, Tuple
 
 import pandas as pd
-from evidently import ColumnMapping
 from evidently.metric_preset import DataDriftPreset, DataQualityPreset
 from evidently.report import Report
 
@@ -54,15 +53,6 @@ def detect_drift(
     """
     logger.info("Detecting data drift...")
 
-    # Define column mapping
-    column_mapping = ColumnMapping()
-    column_mapping.target = target_column
-
-    if numerical_features:
-        column_mapping.numerical_features = numerical_features
-    if categorical_features:
-        column_mapping.categorical_features = categorical_features
-
     # Create drift report
     report = Report(
         metrics=[
@@ -71,7 +61,8 @@ def detect_drift(
         ]
     )
 
-    report.run(reference_data=reference_data, current_data=current_data, column_mapping=column_mapping)
+    # Let Evidently infer column roles automatically based on the data
+    report.run(reference_data=reference_data, current_data=current_data)
 
     logger.info("Drift detection completed")
     return report
