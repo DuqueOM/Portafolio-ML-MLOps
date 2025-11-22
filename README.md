@@ -7,6 +7,11 @@
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue.svg)](https://github.com/features/actions)
 [![Coverage](https://img.shields.io/badge/Coverage-%3E70%25-brightgreen.svg)](tests/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED.svg?logo=docker&logoColor=white)](Dockerfile)
+[![DVC](https://img.shields.io/badge/DVC-Data%20Versioning-945DD6.svg)](https://dvc.org)
+[![Terraform](https://img.shields.io/badge/Terraform-IaC-7B42BC.svg?logo=terraform&logoColor=white)](infra/terraform/)
+[![MLflow](https://img.shields.io/badge/MLflow-Tracking-0194E2.svg?logo=mlflow&logoColor=white)](https://mlflow.org)
+[![Evidently](https://img.shields.io/badge/Evidently-Drift%20Detection-FF6600.svg)](https://evidentlyai.com)
 
 > **Portfolio profesional que demuestra el ciclo de vida completo de Machine Learning: desde el análisis exploratorio y el entrenamiento de modelos, hasta la implementación de pipelines de CI/CD, APIs REST y despliegue containerizado.**
 
@@ -123,23 +128,65 @@ Portafolio-ML-MLOps/
 
 ---
 
-## 🚀 Quick Start (BankChurn Demo)
+## 🚀 Quick Start
 
+### One-Liner Demo (Recommended)
 ```bash
-# 1. Clonar el repositorio
+# Start full demo stack with all 3 services + MLflow
+make docker-demo
+# or: bash scripts/demo.sh
+```
+
+**Demo includes:**
+- 🏦 BankChurn API: `http://localhost:8001`
+- 🚗 CarVision API: `http://localhost:8002`
+- 📱 Telecom API: `http://localhost:8003`
+- 📊 MLflow UI: `http://localhost:5000`
+
+### Manual Setup (BankChurn)
+```bash
+# 1. Clone repository
 git clone https://github.com/DuqueOM/Portafolio-ML-MLOps.git
-cd Portafolio-ML-MLOps/BankChurn-Predictor
+cd Portafolio-ML-MLOps
 
-# 2. Construir la imagen Docker
+# 2. Using Docker Compose (easiest)
+docker-compose -f docker-compose.demo.yml up -d
+
+# 3. Or build individual service
+cd BankChurn-Predictor
 docker build -t bankchurn:latest .
-
-# 3. Ejecutar el contenedor
 docker run -p 8000:8000 bankchurn:latest
 
-# 4. Probar la API (en otra terminal)
-curl -X POST "http://localhost:8000/predict" \
+# 4. Test API
+curl -X POST "http://localhost:8001/predict" \
      -H "Content-Type: application/json" \
-     -d '{"features": [600, "France", "Female", 40, 3, 60000, 2, 1, 1, 50000]}'
+     -d '{
+       "CreditScore": 650,
+       "Geography": "France",
+       "Gender": "Female",
+       "Age": 40,
+       "Tenure": 3,
+       "Balance": 60000,
+       "NumOfProducts": 2,
+       "HasCrCard": 1,
+       "IsActiveMember": 1,
+       "EstimatedSalary": 50000
+     }'
+```
+
+### Development Setup
+```bash
+# Install dependencies for all projects
+make install
+
+# Run tests
+make test
+
+# Run CI pipeline locally
+make ci-local
+
+# Check service health
+make health-check
 ```
 
 ---

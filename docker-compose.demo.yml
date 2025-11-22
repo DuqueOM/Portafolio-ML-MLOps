@@ -1,0 +1,169 @@
+version: '3.8'
+
+# ML-MLOps Portfolio Demo Stack
+# Levanta los 3 proyectos principales + MLflow Tracking Server
+# Uso: docker-compose -f docker-compose.demo.yml up --build
+
+services:
+  # MLflow Tracking Server (central)
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.9.2
+    container_name: mlflow-server
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow-artifacts:/mlflow
+      - ./mlruns:/mlruns
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=sqlite:///mlflow/mlflow.db
+      - MLFLOW_DEFAULT_ARTIFACT_ROOT=/mlflow/artifacts
+    command: >
+      mlflow server
+      --backend-store-uri sqlite:///mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+      --host 0.0.0.0
+      --port 5000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - ml-network
+
+  # BankChurn Predictor API
+  bankchurn:
+    build:
+      context: ./BankChurn-Predictor
+      dockerfile: Dockerfile
+    container_name: bankchurn-api
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./BankChurn-Predictor/data:/app/data:ro
+      - ./BankChurn-Predictor/models:/app/models:ro
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    networks:
+      - ml-network
+    restart: unless-stopped
+
+  # CarVision Market Intelligence API
+  carvision:
+    build:
+      context: ./CarVision-Market-Intelligence
+      dockerfile: Dockerfile
+    container_name: carvision-api
+    ports:
+      - "8002:8000"
+      - "8501:8501"  # Streamlit dashboard
+    volumes:
+      - ./CarVision-Market-Intelligence/data:/app/data:ro
+      - ./CarVision-Market-Intelligence/models:/app/models:ro
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    networks:
+      - ml-network
+    restart: unless-stopped
+
+  # TelecomAI Customer Intelligence API
+  telecom:
+    build:
+      context: ./TelecomAI-Customer-Intelligence
+      dockerfile: Dockerfile
+    container_name: telecom-api
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./TelecomAI-Customer-Intelligence/data:/app/data:ro
+      - ./TelecomAI-Customer-Intelligence/models:/app/models:ro
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    networks:
+      - ml-network
+    restart: unless-stopped
+
+  # Prometheus (Monitoring - Opcional)
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infra/prometheus-config.yaml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - ml-network
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  # Grafana (Dashboards - Opcional)
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - ml-network
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+volumes:
+  mlflow-artifacts:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  ml-network:
+    driver: bridge
+    name: ml-mlops-network

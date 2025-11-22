@@ -1,0 +1,163 @@
+name: CML - Model Training Comparison
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**/src/**'
+      - '**/main.py'
+      - '**/train*.py'
+      - '**/configs/*.yaml'
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  train-and-compare:
+    name: Train & Compare Models
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    strategy:
+      matrix:
+        project:
+          - BankChurn-Predictor
+    
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.in ]; then
+            sed -e '/--hash=/d' -e 's/ \\$//' requirements.in > requirements_clean.txt
+            pip install -r requirements_clean.txt
+          elif [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+          pip install cml
+      
+      - name: Train model on PR branch
+        id: train_pr
+        working-directory: ${{ matrix.project }}
+        continue-on-error: true
+        run: |
+          mkdir -p results
+          python main.py --mode train --config configs/config.yaml --seed 42 --input data/raw/Churn.csv
+          
+          # Extract metrics from training results
+          if [ -f results/training_results.json ]; then
+            echo "PR_METRICS<<EOF" >> $GITHUB_ENV
+            cat results/training_results.json >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            
+            # Save metrics for CML
+            cp results/training_results.json pr_metrics.json
+          fi
+      
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          clean: false
+      
+      - name: Train model on main branch
+        id: train_main
+        working-directory: ${{ matrix.project }}
+        continue-on-error: true
+        run: |
+          mkdir -p results_main
+          python main.py --mode train --config configs/config.yaml --seed 42 --input data/raw/Churn.csv
+          
+          # Extract metrics from training results
+          if [ -f results/training_results.json ]; then
+            mv results/training_results.json results_main/training_results.json
+            
+            echo "MAIN_METRICS<<EOF" >> $GITHUB_ENV
+            cat results_main/training_results.json >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            
+            # Save metrics for CML
+            cp results_main/training_results.json main_metrics.json
+          fi
+      
+      - name: Generate CML report
+        if: always()
+        working-directory: ${{ matrix.project }}
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "# 📊 Model Training Comparison - ${{ matrix.project }}" > report.md
+          echo "" >> report.md
+          echo "Comparing PR branch vs main branch" >> report.md
+          echo "" >> report.md
+          
+          # Extract and compare metrics
+          if [ -f pr_metrics.json ] && [ -f main_metrics.json ]; then
+            echo "## Metrics Comparison" >> report.md
+            echo "" >> report.md
+            echo "| Metric | Main Branch | PR Branch | Δ Change |" >> report.md
+            echo "|--------|-------------|-----------|----------|" >> report.md
+            
+            # Parse JSON and create comparison table
+            python << 'PYEOF'
+          import json
+          import sys
+          
+          try:
+              with open('pr_metrics.json', 'r') as f:
+                  pr_metrics = json.load(f)
+              with open('main_metrics.json', 'r') as f:
+                  main_metrics = json.load(f)
+              
+              metrics_to_compare = ['roc_auc', 'accuracy', 'f1_score', 'precision', 'recall']
+              
+              for metric in metrics_to_compare:
+                  if metric in pr_metrics and metric in main_metrics:
+                      main_val = float(main_metrics[metric])
+                      pr_val = float(pr_metrics[metric])
+                      delta = pr_val - main_val
+                      delta_pct = (delta / main_val * 100) if main_val != 0 else 0
+                      
+                      emoji = "📈" if delta > 0 else "📉" if delta < 0 else "➡️"
+                      
+                      print(f"| {metric} | {main_val:.4f} | {pr_val:.4f} | {emoji} {delta:+.4f} ({delta_pct:+.2f}%) |")
+          except Exception as e:
+              print(f"Error comparing metrics: {e}", file=sys.stderr)
+          PYEOF
+            
+          fi >> report.md
+          
+          echo "" >> report.md
+          echo "## Training Info" >> report.md
+          echo "- **PR Branch:** ${{ github.event.pull_request.head.ref }}" >> report.md
+          echo "- **Base Branch:** ${{ github.event.pull_request.base.ref }}" >> report.md
+          echo "- **Commit SHA:** ${{ github.event.pull_request.head.sha }}" >> report.md
+          echo "" >> report.md
+          
+          # Post comment
+          cml comment create report.md
+      
+      - name: Upload metrics artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: training-comparison-${{ matrix.project }}
+          path: |
+            ${{ matrix.project }}/pr_metrics.json
+            ${{ matrix.project }}/main_metrics.json
+            ${{ matrix.project }}/report.md
+          retention-days: 30

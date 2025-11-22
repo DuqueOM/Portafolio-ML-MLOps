@@ -1,0 +1,170 @@
+name: Data Drift Detection
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Run every day at 2 AM UTC
+  workflow_dispatch:  # Manual trigger
+  push:
+    branches: [ main ]
+    paths:
+      - '**/monitoring/drift_detection.py'
+      - '.github/workflows/drift-detection.yml'
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  drift-detection:
+    name: Detect Data Drift
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - BankChurn-Predictor
+          # Add other projects as needed
+          # - CarVision-Market-Intelligence
+          # - TelecomAI-Customer-Intelligence
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install evidently pandas numpy scikit-learn
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+      
+      - name: Create reports directory
+        working-directory: ${{ matrix.project }}
+        run: mkdir -p reports
+      
+      - name: Run drift detection
+        id: drift
+        working-directory: ${{ matrix.project }}
+        continue-on-error: true
+        run: |
+          # Use the same dataset for reference and current (demo purposes)
+          # In production, you would compare training data vs new production data
+          python monitoring/drift_detection.py \
+            --reference data/raw/Churn.csv \
+            --current data/raw/Churn.csv \
+            --output-html reports/drift_report_${{ github.run_number }}.html \
+            --output-json reports/drift_metrics_${{ github.run_number }}.json \
+            --threshold 0.5 \
+            --target Exited
+      
+      - name: Upload drift report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: drift-report-${{ matrix.project }}-${{ github.run_number }}
+          path: |
+            ${{ matrix.project }}/reports/drift_report_*.html
+            ${{ matrix.project }}/reports/drift_metrics_*.json
+          retention-days: 30
+      
+      - name: Read drift metrics
+        if: always()
+        id: metrics
+        working-directory: ${{ matrix.project }}
+        run: |
+          if [ -f reports/drift_metrics_${{ github.run_number }}.json ]; then
+            DRIFT_DETECTED=$(jq -r '.dataset_drift' reports/drift_metrics_${{ github.run_number }}.json)
+            DRIFTED_COLS=$(jq -r '.number_of_drifted_columns' reports/drift_metrics_${{ github.run_number }}.json)
+            SHARE_DRIFTED=$(jq -r '.share_of_drifted_columns' reports/drift_metrics_${{ github.run_number }}.json)
+            
+            echo "drift_detected=$DRIFT_DETECTED" >> $GITHUB_OUTPUT
+            echo "drifted_columns=$DRIFTED_COLS" >> $GITHUB_OUTPUT
+            echo "share_drifted=$SHARE_DRIFTED" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Comment on PR (if applicable)
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const drift_detected = '${{ steps.metrics.outputs.drift_detected }}';
+            const drifted_cols = '${{ steps.metrics.outputs.drifted_columns }}';
+            const share_drifted = '${{ steps.metrics.outputs.share_drifted }}';
+            
+            let icon = drift_detected === 'true' ? '⚠️' : '✅';
+            let message = `## ${icon} Data Drift Detection - ${{ matrix.project }}
+            
+            **Drift Detected:** ${drift_detected}
+            **Drifted Columns:** ${drifted_cols}
+            **Share of Drifted Columns:** ${(parseFloat(share_drifted) * 100).toFixed(2)}%
+            
+            📊 [View full drift report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });
+      
+      - name: Create GitHub Issue on drift alert
+        if: steps.drift.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `⚠️ Data Drift Alert: ${{ matrix.project }}`,
+              body: `# Data Drift Detected
+              
+              **Project:** ${{ matrix.project }}
+              **Run:** ${{ github.run_number }}
+              **Date:** ${new Date().toISOString()}
+              
+              ## Details
+              - **Drifted Columns:** ${{ steps.metrics.outputs.drifted_columns }}
+              - **Share Drifted:** ${{ steps.metrics.outputs.share_drifted }}
+              
+              ## Action Required
+              1. Review the drift report in the workflow artifacts
+              2. Investigate the cause of drift
+              3. Consider retraining the model if needed
+              
+              ## Links
+              - [Workflow Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+              - [Download Drift Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+              `,
+              labels: ['drift-alert', 'monitoring', 'mlops']
+            });
+            
+            console.log(`Created issue #${issue.data.number}`);
+  
+  summary:
+    name: Drift Detection Summary
+    runs-on: ubuntu-latest
+    needs: drift-detection
+    if: always()
+    
+    steps:
+      - name: Generate summary
+        run: |
+          echo "# 📊 Drift Detection Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ needs.drift-detection.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "- Review drift reports in workflow artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "- Check for GitHub issues if drift alert was triggered" >> $GITHUB_STEP_SUMMARY
+          echo "- Consider model retraining if significant drift detected" >> $GITHUB_STEP_SUMMARY
