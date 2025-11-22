@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Dict, Tuple
 
 import pandas as pd
-from evidently.metric_preset import DataDriftPreset, DataQualityPreset
+from evidently.presets import DataDriftPreset
 from evidently.report import Report
 
 # Setup logging
@@ -53,11 +53,10 @@ def detect_drift(
     """
     logger.info("Detecting data drift...")
 
-    # Create drift report
+    # Create drift report using Evidently preset API
     report = Report(
         metrics=[
             DataDriftPreset(),
-            DataQualityPreset(),
         ]
     )
 
