@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for BankChurn Predictor
 # Optimized for minimal image size (~600MB target)
 # Stage 1: Builder
-FROM python:3.13.14-slim-bookworm AS builder
+FROM python:3.13.15-slim-bookworm AS builder
 
 LABEL maintainer="DuqueOM <DuqueOrtegaMutis@gmail.com>" \
       version="3.0.0" \
@@ -46,7 +46,7 @@ RUN python -m venv /opt/venv && \
     /opt/venv/bin/python -c "import fastapi, uvicorn, xgboost, lightgbm"
 
 # Stage 2: Runtime — Lightweight final image
-FROM python:3.13.14-slim-bookworm AS runtime
+FROM python:3.13.15-slim-bookworm AS runtime
 
 # Runtime environment variables
 ENV PYTHONUNBUFFERED=1
